@@ -9,7 +9,7 @@ return
         -- Close blame window
         quit_blame = "q",
         -- Open blame commit
-        blame_commit = "<CR>",
+        blame_commit = "<Leader>gB",
         -- Quit blame commit
         quit_blame_commit = "q",
         -- Open file/folder in git repository
