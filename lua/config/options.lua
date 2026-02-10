@@ -2,6 +2,8 @@ vim.g.mapleader = " "
 vim.opt.clipboard = "unnamedplus"
 vim.opt.shell = "/usr/bin/zsh"
 vim.opt.nu = true
+vim.opt.number = true
+vim.opt.relativenumber = true
 vim.scriptencoding = "utf-8"
 vim.opt.encoding = "utf-8"
 vim.opt.fileencoding = "utf-8"
@@ -39,6 +41,22 @@ vim.opt.splitbelow = true
 vim.opt.splitright = true
 vim.opt.splitkeep = "cursor"
 vim.opt.mouse = ""
+
+vim.api.nvim_create_autocmd("ColorScheme", {
+    callback = function()
+        vim.api.nvim_set_hl(0, "CursorLineNr", {
+            fg = "#e6c384",
+            bold = true,
+        })
+    end,
+})
+
+
+vim.api.nvim_set_hl(0, "CursorLine", {
+    bg = "#202028", -- example dark highlight
+})
+
+vim.opt.cursorline = true
 
 vim.opt.timeout = false
 vim.opt.ttimeout = true

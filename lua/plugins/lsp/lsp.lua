@@ -17,6 +17,9 @@ return {
             "lua_ls",
             "clangd",
             "pyright",
+            "ltex",
+            "texlab",
+            "yamlls",
         }
 
         vim.lsp.enable(servers)

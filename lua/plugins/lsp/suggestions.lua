@@ -41,7 +41,6 @@ return
                 auto_show_delay_ms = 250,
                 treesitter_highlighting = true,
                 window = { border = "rounded" },
-                scrollbar = false,
             },
             menu = {
                 scrollbar = false,
@@ -84,7 +83,7 @@ return
                     },
                 },
             },
-            fuzzy = { implementation = "prefer_rust_with_warning" }
+            --fuzzy = { implementation = "prefer_rust_with_warning" }
         },
         -- See the fuzzy documentation for more information
     },

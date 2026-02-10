@@ -1,5 +1,5 @@
 require("config.lazy")
-require("lsp")
+require("plugins.latex.snippets")
 -- Put this in :lua prompt or init.lua temporarily
 --
 vim.api.nvim_set_hl(0, "BlinkCmpMenu", { bg = "NONE", fg = "#c8c093" })
