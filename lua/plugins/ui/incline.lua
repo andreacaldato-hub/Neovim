@@ -12,7 +12,7 @@ return {
       require("incline").setup({
         window = {
           padding = 0,
-          margin = { horizontal = 1 },
+          margin = { horizontal = 0 },
         },
         render = function(props)
           local filename = vim.fn.fnamemodify(vim.api.nvim_buf_get_name(props.buf), ":t")
@@ -23,7 +23,7 @@ return {
             " ",
             { filename, gui = modified and "bold,italic" or "bold" },
             " ",
-            guibg = "#363944",
+            guibg = "#1F1E26",
           }
           return buffer
         end,

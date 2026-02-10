@@ -11,6 +11,7 @@ return {
         file_browser = {
           hidden = true,
           previewer = true,  -- enable built-in previewer (bat for files)
+          grouped = true,  -- enable built-in previewer (bat for files)
         },
       },
     })

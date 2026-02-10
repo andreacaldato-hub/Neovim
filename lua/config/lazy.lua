@@ -30,6 +30,7 @@ require("lazy").setup({
     { import = "plugins" },
     { import = "plugins.ui" }, -- everything inside "others" folder  },
     { import = "plugins.utils" }, -- everything inside "others" folder  },
+    { import = "plugins.lsp" }, -- everything inside "others" folder  },
   -- Configure any other settings here. See the documentation for more details.
   -- colorscheme that will be used when installing plugins.
   -- automatically check for plugin updates
