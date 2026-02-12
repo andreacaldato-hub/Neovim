@@ -462,28 +462,38 @@ ls.add_snippets("tex", {
 -- =========================
 local keymap_opts = { silent = true }
 
--- Expand snippet with double space
-vim.keymap.set({ "i", "s" }, "<Tab>", function()
-    if ls.expandable() then
-        ls.expand()
-    end
-end, keymap_opts)
--- <Tab> jumps to next insert node
-vim.keymap.set({ "i", "s" }, "<C-l>", function()
-    if ls.jumpable(1) then
-        ls.jump(1)
-        return ""
-    else
-        return vim.api.nvim_replace_termcodes("<C-l>", true, true, true)
-    end
-end, keymap_opts)
+vim.api.nvim_create_autocmd("FileType", {
+    pattern = "tex",
+    callback = function()
+        local ls = require("luasnip")
+        local keymap_opts = { silent = true, noremap = true, buffer = true }
 
--- <S-Tab> jumps to previous insert node
-vim.keymap.set({ "i", "s" }, "<C-h>", function()
-    if ls.jumpable(-1) then
-        ls.jump(-1)
-        return ""
-    else
-        return vim.api.nvim_replace_termcodes("<C-h>", true, true, true)
-    end
-end, keymap_opts)
+        -- <Tab> expands snippet if possible
+        vim.keymap.set({ "i", "s" }, "<Tab>", function()
+            if ls.expandable() then
+                ls.expand()
+            end
+        end, keymap_opts)
+
+        -- <C-l> jumps to next insert node
+        vim.keymap.set({ "i", "s" }, "<C-l>", function()
+            if ls.jumpable(1) then
+                ls.jump(1)
+                return ""
+            else
+                return vim.api.nvim_replace_termcodes("<C-l>", true, true, true)
+            end
+        end, keymap_opts)
+
+        -- <C-h> jumps to previous insert node
+        vim.keymap.set({ "i", "s" }, "<C-h>", function()
+            if ls.jumpable(-1) then
+                ls.jump(-1)
+                return ""
+            else
+                return vim.api.nvim_replace_termcodes("<C-h>", true, true, true)
+            end
+        end, keymap_opts)
+    end,
+})
+-- Expand snippet with double space

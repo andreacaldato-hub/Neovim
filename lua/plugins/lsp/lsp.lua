@@ -20,6 +20,7 @@ return {
             "ltex",
             "texlab",
             "yamlls",
+            "ts_ls",
         }
 
         vim.lsp.enable(servers)
