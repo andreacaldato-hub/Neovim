@@ -1,18 +1,38 @@
 return {
     "neovim/nvim-lspconfig",
-    -- Enable inline diagnostics (THIS is what you want)
-    vim.diagnostic.config({
-        virtual_text = true,
-        update_in_insert = false,
-        severity_sort = false
-    }),
-    -- Auto format on save
-    vim.api.nvim_create_autocmd("BufWritePre", {
-        callback = function()
-            vim.lsp.buf.format({ async = false })
-        end,
-    }),
+
     config = function()
+        -- Diagnostics
+        vim.diagnostic.config({
+            virtual_text = true,
+            update_in_insert = false,
+            severity_sort = true,
+        })
+
+        -- Format on save + inlay hints when LSP attaches
+        vim.api.nvim_create_autocmd("LspAttach", {
+            callback = function(args)
+                local client = vim.lsp.get_client_by_id(args.data.client_id)
+                local bufnr = args.buf
+
+                -- Format on save
+                if client and client.server_capabilities.documentFormattingProvider then
+                    vim.api.nvim_create_autocmd("BufWritePre", {
+                        buffer = bufnr,
+                        callback = function()
+                            vim.lsp.buf.format({ bufnr = bufnr })
+                        end,
+                    })
+                end
+
+                -- Inlay hints
+                if client and client.server_capabilities.inlayHintProvider then
+                    vim.lsp.inlay_hint.enable(true, { bufnr = bufnr })
+                end
+            end,
+        })
+
+        -- Servers
         local servers = {
             "lua_ls",
             "clangd",
@@ -21,6 +41,8 @@ return {
             "texlab",
             "yamlls",
             "ts_ls",
+            "html",
+            "bashls",
         }
 
         vim.lsp.enable(servers)

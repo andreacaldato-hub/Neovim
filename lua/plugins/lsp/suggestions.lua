@@ -16,6 +16,7 @@ return
     ---@module 'blink.cmp'
     ---@type blink.cmp.Config
     opts = {
+        signature = { enabled = true },
         keymap = {
             ["<C-space>"] = { "show", "show_documentation", "hide_documentation" },
             ["<C-e>"] = { "hide", "fallback" },
@@ -26,6 +27,7 @@ return
             ["<C-f>"] = { "accept", "fallback" },
             ["<C-d>"] = { "scroll_documentation_down", "fallback" },
             ["<C-u>"] = { "scroll_documentation_up", "fallback" },
+            ['<C-k>'] = { 'show_signature', 'hide_signature', 'fallback' },
         },
 
         appearance = {

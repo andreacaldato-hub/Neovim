@@ -22,6 +22,10 @@ return {
                 inc_rename = true,
                 lsp_doc_border = true,
             },
+            cmdline = {
+                enabled = true, -- enables the Noice cmdline UI
+                view = "cmdline",
+            }
         })
     end,
 }
