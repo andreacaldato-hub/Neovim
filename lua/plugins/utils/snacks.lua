@@ -25,8 +25,7 @@ return {
 			},
 		},
 	},
-	keys = {
-		-- Top Pickers & Explorer
+	keys = { -- Top Pickers & Explorer
 		{
 			"<leader>/",
 			function()
@@ -442,13 +441,6 @@ return {
 			end,
 			desc = "Git Browse",
 			mode = { "n", "v" },
-		},
-		{
-			"<leader>gg",
-			function()
-				Snacks.lazygit()
-			end,
-			desc = "Lazygit",
 		},
 		{
 			"<leader>un",
