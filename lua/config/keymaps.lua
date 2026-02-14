@@ -2,7 +2,6 @@
 -- Set leader key to space
 vim.keymap.set({ "n", "v" }, "<Space>", "<Nop>", { silent = true })
 local opts = { noremap = true, silent = true }
-
 -- Normal paste (keep defaults, but we set explicitly)
 vim.keymap.set("n", "P", "P")
 vim.keymap.set({ "n", "v" }, "d", '"_d')
@@ -25,9 +24,9 @@ vim.keymap.set("n", "<S-Tab>", ":bprevious<CR>", opts)
 vim.keymap.set("n", "<leader>x", ":bd!<CR>", opts) -- close buffer
 -- tabs
 -- window management
-vim.keymap.set("n", "<leader>v", "<C-w>v", opts)      -- split window vertically
-vim.keymap.set("n", "<leader>o", "<C-w>s", opts)      -- split window horizontally
-vim.keymap.set("n", "<leader>se", "<C-w>=", opts)     -- make split windows equal width & height
+vim.keymap.set("n", "<leader>v", "<C-w>v", opts) -- split window vertically
+vim.keymap.set("n", "<leader>o", "<C-w>s", opts) -- split window horizontally
+vim.keymap.set("n", "<leader>se", "<C-w>=", opts) -- make split windows equal width & height
 vim.keymap.set("n", "<leader>xs", ":close<CR>", opts) -- close current split window
 -- Resize with arrows
 vim.keymap.set("n", "<Up>", ":resize +2<CR>", opts)
@@ -49,16 +48,16 @@ vim.keymap.set("v", "p", '"_dP', opts)
 vim.keymap.set({ "n", "v" }, "x", "d", { noremap = true })
 -- path to your terminal emulator
 local function run_fzf_tmux(func)
-    -- Single-line shell command: run the Zsh function, then exit shell
-    local shell_cmd = string.format('zsh -ic "if [ -n \\"$TMUX\\" ]; then %s; else %s; fi"', func, func)
+	-- Single-line shell command: run the Zsh function, then exit shell
+	local shell_cmd = string.format('zsh -ic "if [ -n \\"$TMUX\\" ]; then %s; else %s; fi"', func, func)
 
-    -- Open a new buffer in full window for terminal
-    vim.cmd("enew") -- new empty buffer
-    vim.cmd("terminal " .. shell_cmd)
-    vim.cmd("startinsert")
+	-- Open a new buffer in full window for terminal
+	vim.cmd("enew") -- new empty buffer
+	vim.cmd("terminal " .. shell_cmd)
+	vim.cmd("startinsert")
 
-    -- Close the buffer automatically when terminal process exits
-    vim.cmd([[
+	-- Close the buffer automatically when terminal process exits
+	vim.cmd([[
     augroup CloseTermOnExit
       autocmd! TermClose <buffer> bd!
     augroup END
@@ -67,22 +66,22 @@ end
 
 -- Key mappings
 vim.keymap.set("n", "<M-C-t>", function()
-    run_fzf_tmux("fzf-tmux-session")
+	run_fzf_tmux("fzf-tmux-session")
 end)
 vim.keymap.set("n", "<M-C-g>", function()
-    run_fzf_tmux("fzf-tmux-gitrepo")
+	run_fzf_tmux("fzf-tmux-gitrepo")
 end)
 vim.keymap.set("n", "<M-C-f>", function()
-    run_fzf_tmux("fzf-tmux-switch")
+	run_fzf_tmux("fzf-tmux-switch")
 end)
 
 vim.api.nvim_set_keymap("t", "<leader>q", "<C-\\><C-n>:q<CR>", { noremap = true, silent = true })
 
 vim.api.nvim_set_keymap(
-    "n",
-    "<leader>t",
-    ":execute 'vsplit term://bash' | :cd %:p:h<CR>",
-    { noremap = true, silent = true }
+	"n",
+	"<leader>t",
+	":execute 'vsplit term://bash' | :cd %:p:h<CR>",
+	{ noremap = true, silent = true }
 )
 
 vim.api.nvim_set_keymap("n", "<leader>h", ":hide<CR>", { noremap = true, silent = true })
@@ -93,15 +92,15 @@ vim.api.nvim_set_keymap("n", "<Leader>t", ":lua OpenTerminalWithCWD()<CR>", { no
 
 -- Function to open terminal with 'cd' to the current file's directory
 function OpenTerminalWithCWD()
-    local current_file_dir = vim.fn.expand("%:p:h")
+	local current_file_dir = vim.fn.expand("%:p:h")
 
-    vim.cmd("botright vsplit")
-    vim.fn.termopen(vim.o.shell, { cwd = current_file_dir })
+	vim.cmd("botright vsplit")
+	vim.fn.termopen(vim.o.shell, { cwd = current_file_dir })
 
-    -- force width AFTER everything settles
-    vim.cmd("vertical resize 80")
+	-- force width AFTER everything settles
+	vim.cmd("vertical resize 80")
 
-    vim.cmd("startinsert")
+	vim.cmd("startinsert")
 end
 
 -- Set a keybinding for entering Normal mode in terminal
@@ -164,9 +163,9 @@ vim.keymap.set("n", "<C-h>", "<Cmd>TmuxNavigateLeft<CR>", { noremap = true, sile
 vim.keymap.set("n", "<C-k>", "<Cmd>TmuxNavigateUp<CR>", { noremap = true, silent = true })
 vim.keymap.set("n", "<C-j>", "<Cmd>TmuxNavigateDown<CR>", { noremap = true, silent = true })
 function OpenTmuxSplit()
-    local file_path = vim.fn.expand("%:p:h")                                -- Get the directory of the current file
-    local cmd = "tmux split-window -h -c " .. vim.fn.shellescape(file_path) -- Open tmux split in that directory
-    vim.fn.system(cmd)
+	local file_path = vim.fn.expand("%:p:h") -- Get the directory of the current file
+	local cmd = "tmux split-window -h -c " .. vim.fn.shellescape(file_path) -- Open tmux split in that directory
+	vim.fn.system(cmd)
 end
 
 vim.api.nvim_set_keymap("n", "<leader>t", ":lua OpenTmuxSplit()<CR>", { noremap = true, silent = true })
@@ -184,159 +183,159 @@ local live_servers = {}
 
 -- Hash dir into unique port between 3000–3999
 local function get_port_from_dir(dir)
-    local hash = 0
-    for i = 1, #dir do
-        hash = (hash * 31 + dir:byte(i)) % 10000
-    end
-    return 3000 + (hash % 1000)
+	local hash = 0
+	for i = 1, #dir do
+		hash = (hash * 31 + dir:byte(i)) % 10000
+	end
+	return 3000 + (hash % 1000)
 end
 
 -- Check if file is within the directory
 local function is_file_in_dir(file, dir)
-    return vim.startswith(file, dir)
+	return vim.startswith(file, dir)
 end
 
 -- Start live-server for current file's dir
 map("n", "<leader>bs", function()
-    local dir = vim.fn.expand("%:p:h")
-    if live_servers[dir] then
-        print("Live server already running for: " .. dir)
-        return
-    end
+	local dir = vim.fn.expand("%:p:h")
+	if live_servers[dir] then
+		print("Live server already running for: " .. dir)
+		return
+	end
 
-    local port = get_port_from_dir(dir)
-    live_servers[dir] = port
+	local port = get_port_from_dir(dir)
+	live_servers[dir] = port
 
-    local cmd = {
-        "live-server",
-        "--port=" .. port,
-        "--quiet",
-        "--no-browser",
-    }
+	local cmd = {
+		"live-server",
+		"--port=" .. port,
+		"--quiet",
+		"--no-browser",
+	}
 
-    vim.fn.jobstart(cmd, {
-        cwd = dir,
-        detach = true,
-        on_exit = function()
-            live_servers[dir] = nil
-        end,
-    })
+	vim.fn.jobstart(cmd, {
+		cwd = dir,
+		detach = true,
+		on_exit = function()
+			live_servers[dir] = nil
+		end,
+	})
 
-    print("Live server started at http://localhost:" .. port)
+	print("Live server started at http://localhost:" .. port)
 end, opts)
 
 -- Open current file with live server
 map("n", "<leader>b", function()
-    local file = vim.fn.expand("%:p")
-    local dir = vim.fn.expand("%:p:h")
-    local file_name = vim.fn.expand("%:t")
+	local file = vim.fn.expand("%:p")
+	local dir = vim.fn.expand("%:p:h")
+	local file_name = vim.fn.expand("%:t")
 
-    local port = live_servers[dir] or get_port_from_dir(dir)
+	local port = live_servers[dir] or get_port_from_dir(dir)
 
-    if not is_file_in_dir(file, dir) then
-        print("File is not inside live server root: " .. dir)
-        return
-    end
+	if not is_file_in_dir(file, dir) then
+		print("File is not inside live server root: " .. dir)
+		return
+	end
 
-    local url = string.format("http://localhost:%d/%s", port, file_name)
-    vim.fn.jobstart({ "firefox", url }, { detach = true })
+	local url = string.format("http://localhost:%d/%s", port, file_name)
+	vim.fn.jobstart({ "firefox", url }, { detach = true })
 end, opts)
 --    print("Not an HTML file.")
 map("n", "<leader>bx", function()
-    local dir = vim.fn.expand("%:p:h")
-    local port = live_servers[dir]
-    if not port then
-        print("No live server running for this directory.")
-        return
-    end
-    vim.fn.jobstart({ "pkill", "-f", "live-server.*" .. port }, {
-        on_exit = function()
-            print("Stopped live server on port " .. port)
-            live_servers[dir] = nil
-        end,
-    })
+	local dir = vim.fn.expand("%:p:h")
+	local port = live_servers[dir]
+	if not port then
+		print("No live server running for this directory.")
+		return
+	end
+	vim.fn.jobstart({ "pkill", "-f", "live-server.*" .. port }, {
+		on_exit = function()
+			print("Stopped live server on port " .. port)
+			live_servers[dir] = nil
+		end,
+	})
 end, opts)
 -- Show currently running live servers
 map("n", "<leader>bl", function()
-    local count = 0
-    for dir, port in pairs(live_servers) do
-        print("🟢 " .. dir .. " → http://localhost:" .. port)
-        count = count + 1
-    end
-    if count == 0 then
-        print("No live servers running.")
-    else
-        print(count .. " live server(s) running.")
-    end
+	local count = 0
+	for dir, port in pairs(live_servers) do
+		print("🟢 " .. dir .. " → http://localhost:" .. port)
+		count = count + 1
+	end
+	if count == 0 then
+		print("No live servers running.")
+	else
+		print(count .. " live server(s) running.")
+	end
 end, opts)
 
 -- Kill all running live servers
 map("n", "<leader>bk", function()
-    local count = 0
-    for dir, port in pairs(live_servers) do
-        vim.fn.jobstart({ "pkill", "-f", "live-server.*" .. port }, {
-            on_exit = function()
-                print("🛑 Stopped live server on port " .. port)
-            end,
-        })
-        live_servers[dir] = nil
-        count = count + 1
-    end
-    if count == 0 then
-        print("No live servers were running.")
-    else
-        print("Killed " .. count .. " live server(s).")
-    end
+	local count = 0
+	for dir, port in pairs(live_servers) do
+		vim.fn.jobstart({ "pkill", "-f", "live-server.*" .. port }, {
+			on_exit = function()
+				print("🛑 Stopped live server on port " .. port)
+			end,
+		})
+		live_servers[dir] = nil
+		count = count + 1
+	end
+	if count == 0 then
+		print("No live servers were running.")
+	else
+		print("Killed " .. count .. " live server(s).")
+	end
 end, opts)
 -- Auto-disable autoindent when pasting
 vim.api.nvim_create_autocmd("TextYankPost", {
-    pattern = "*",
-    callback = function()
-        vim.opt.paste = false
-    end,
+	pattern = "*",
+	callback = function()
+		vim.opt.paste = false
+	end,
 })
 
 -- Remap `p` and `P` to paste in 'paste' mode temporarily
 vim.keymap.set("n", "p", function()
-    local paste = vim.opt.paste:get()
-    vim.opt.paste = true
-    vim.api.nvim_feedkeys("p", "n", true)
-    vim.opt.paste = paste
+	local paste = vim.opt.paste:get()
+	vim.opt.paste = true
+	vim.api.nvim_feedkeys("p", "n", true)
+	vim.opt.paste = paste
 end, { noremap = true, silent = true })
 
 vim.keymap.set("n", "P", function()
-    local paste = vim.opt.paste:get()
-    vim.opt.paste = true
-    vim.api.nvim_feedkeys("P", "n", true)
-    vim.opt.paste = paste
+	local paste = vim.opt.paste:get()
+	vim.opt.paste = true
+	vim.api.nvim_feedkeys("P", "n", true)
+	vim.opt.paste = paste
 end, { noremap = true, silent = true })
 vim.api.nvim_create_autocmd("BufEnter", {
-    callback = function()
-        local file = vim.fn.expand("%:p")
-        if file == "" or vim.fn.filereadable(file) == 0 then
-            return
-        end
+	callback = function()
+		local file = vim.fn.expand("%:p")
+		if file == "" or vim.fn.filereadable(file) == 0 then
+			return
+		end
 
-        local file_dir = vim.fn.fnamemodify(file, ":h")
+		local file_dir = vim.fn.fnamemodify(file, ":h")
 
-        -- get repo + branch cleanly
-        local git_root_tbl = vim.fn.systemlist({ "git", "-C", file_dir, "rev-parse", "--show-toplevel" })
-        local branch_tbl = vim.fn.systemlist({ "git", "-C", file_dir, "rev-parse", "--abbrev-ref", "HEAD" })
+		-- get repo + branch cleanly
+		local git_root_tbl = vim.fn.systemlist({ "git", "-C", file_dir, "rev-parse", "--show-toplevel" })
+		local branch_tbl = vim.fn.systemlist({ "git", "-C", file_dir, "rev-parse", "--abbrev-ref", "HEAD" })
 
-        if vim.v.shell_error ~= 0 or #git_root_tbl == 0 or #branch_tbl == 0 then
-            vim.fn.system({ "tmux", "set-option", "-gq", "@nvim_git_info", "" })
-            return
-        end
+		if vim.v.shell_error ~= 0 or #git_root_tbl == 0 or #branch_tbl == 0 then
+			vim.fn.system({ "tmux", "set-option", "-gq", "@nvim_git_info", "" })
+			return
+		end
 
-        local git_root = vim.fn.trim(git_root_tbl[1])
-        local branch = vim.fn.trim(branch_tbl[1])
-        local repo = vim.fn.fnamemodify(git_root, ":t")
+		local git_root = vim.fn.trim(git_root_tbl[1])
+		local branch = vim.fn.trim(branch_tbl[1])
+		local repo = vim.fn.fnamemodify(git_root, ":t")
 
-        local git_info = string.format(" %s:%s", repo, branch)
+		local git_info = string.format(" %s:%s", repo, branch)
 
-        -- write cleanly to tmux
-        vim.fn.system({ "tmux", "set-option", "-gq", "@nvim_git_info", git_info })
-    end,
+		-- write cleanly to tmux
+		vim.fn.system({ "tmux", "set-option", "-gq", "@nvim_git_info", git_info })
+	end,
 })
 -- Define the function globally (no require needed)
 --
@@ -349,11 +348,12 @@ vim.keymap.set("n", "<C-j>", ":TmuxNavigateDown<CR>", { silent = true })
 vim.keymap.set("n", "<C-k>", ":TmuxNavigateUp<CR>", { silent = true })
 vim.keymap.set("n", "<C-l>", ":TmuxNavigateRight<CR>", { silent = true })
 vim.keymap.set(
-    "n",
-    "<leader>r",
-    ":silent !riscv64-elf-gcc -nostdlib -nostartfiles -o %:r.elf % && qemu-riscv64 %:r.elf<CR>",
-    { noremap = true, silent = true }
+	"n",
+	"<leader>r",
+	":silent !riscv64-elf-gcc -nostdlib -nostartfiles -o %:r.elf % && qemu-riscv64 %:r.elf<CR>",
+	{ noremap = true, silent = true }
 )
 -- Default keymaps that are always set: https://github.com/LazyVim/LazyVim/blob/main/lua/lazyvim/config/keymaps.lua
 -- Add any additional keymaps here
---
+
+vim.keymap.del("n", "<leader>xs")
