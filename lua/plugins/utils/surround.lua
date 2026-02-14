@@ -1,16 +1,10 @@
 return {
-	"nvim-mini/mini.surround",
-	config = function()
-		require("mini.surround").setup({
-			mappings = {
-				visual = "s", -- use 's' in visual mode instead of 'sa'
-				add = "sa",
-				delete = "sd",
-				find = "sf",
-				find_left = "sF",
-				highlight = "sh",
-				replace = "sr",
-			},
+	"kylechui/nvim-surround",
+	version = "^3.0.0", -- Use for stability; omit to use `main` branch for the latest features
+	event = "VeryLazy",
+	config = function(ciao)
+		require("nvim-surround").setup({
+			-- Configuration here, or leave empty to use defaults
 		})
 	end,
 }

@@ -9,7 +9,7 @@ return {
 		{
 			"<leader>gg",
 			function()
-				require("neogit").open({ kind = "tab" })
+				require("neogit").open({ kind = "tab", cwd = vim.fn.expand("%:p:h") })
 			end,
 			desc = "Open Neogit UI",
 		},

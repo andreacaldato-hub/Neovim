@@ -79,9 +79,5 @@ return {
 		},
 		-- See the fuzzy documentation for more information
 	},
-
-	sources = {
-		default = { "lsp", "path", "snippets", "buffer" },
-	},
 	opts_extend = { "sources.default" },
 }

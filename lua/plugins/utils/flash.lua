@@ -1,11 +1,11 @@
 return {
 	"folke/flash.nvim",
-	event = "VeryLazy",
+	evene = "VeryLazy",
 	---@type Flash.Config
 	opts = {},
 	keys = {
 		{
-			"S",
+			"s",
 			mode = { "n", "x", "o" },
 			function()
 				require("flash").jump()
