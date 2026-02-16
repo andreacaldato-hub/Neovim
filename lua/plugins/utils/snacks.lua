@@ -5,7 +5,12 @@ return {
 	---@type snacks.Config
 	opts = {
 		bigfile = { enabled = true },
-		dashboard = { enabled = false },
+		dashboard = {
+			enabled = true,
+			sections = {
+				{ section = "header" }, -- ONLY the title
+			},
+		},
 		explorer = { enabled = true },
 		indent = { enabled = true },
 		input = { enabled = true },
@@ -184,7 +189,6 @@ return {
 
 				-- Create some toggle mappings
 				Snacks.toggle.option("spell", { name = "Spelling" }):map("<leader>us")
-				Snacks.toggle.option("wrap", { name = "Wrap" }):map("<leader>uw")
 				Snacks.toggle.option("relativenumber", { name = "Relative Number" }):map("<leader>uL")
 				Snacks.toggle.diagnostics():map("<leader>ud")
 				Snacks.toggle.line_number():map("<leader>ul")
