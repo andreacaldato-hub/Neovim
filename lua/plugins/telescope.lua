@@ -63,7 +63,7 @@ return {
 			end, { desc = "Find dotfiles" })
 
 			vim.keymap.set("n", "<leader>fF", function()
-				builtin.find_files({ cwd = home })
+				builtin.find_files({ cwd = home, hidden = true, file_ignore_patterns = { "^%.git/" } })
 			end, { desc = "Find home files" })
 
 			vim.keymap.set("n", "<leader>fb", builtin.buffers, { desc = "Buffers" })

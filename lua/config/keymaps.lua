@@ -65,15 +65,15 @@ local function run_fzf_tmux(func)
 end
 
 -- Key mappings
-vim.keymap.set("n", "<M-C-t>", function()
-	run_fzf_tmux("fzf-tmux-session")
-end)
-vim.keymap.set("n", "<M-C-g>", function()
-	run_fzf_tmux("fzf-tmux-gitrepo")
-end)
-vim.keymap.set("n", "<M-C-f>", function()
-	run_fzf_tmux("fzf-tmux-switch")
-end)
+-- vim.keymap.set("n", "<M-C-t>", function()
+-- 	run_fzf_tmux("fzf-tmux-session")
+-- end)
+-- vim.keymap.set("n", "<M-C-g>", function()
+-- 	run_fzf_tmux("fzf-tmux-gitrepo")
+-- end)
+-- vim.keymap.set("n", "<M-C-f>", function()
+-- 	run_fzf_tmux("fzf-tmux-switch")
+-- end)
 
 vim.api.nvim_set_keymap("t", "<leader>q", "<C-\\><C-n>:q<CR>", { noremap = true, silent = true })
 
