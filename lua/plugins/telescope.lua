@@ -30,7 +30,7 @@ return {
   " Red vertical bar on the left
   hi TelescopeSelectionCaret guifg=#D7005F guibg=NONE gui=bold
   " Darker background for selected line
-  hi TelescopeSelection guifg=NONE guibg=#3e3e3e gui=bold
+  hi TelescopeSelection guifg=NONE guibg=#0A0D13 gui=bold
   " Transparent background for everything else
   hi TelescopeNormal guibg=NONE
   " Matching characters in green
