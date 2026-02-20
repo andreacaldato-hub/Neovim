@@ -1,12 +1,13 @@
 -- load plugins & snippets
 require("config.lazy")
 require("plugins.latex.snippets")
--- Custom Blink appearance
-vim.api.nvim_set_hl(0, "BlinkCmpMenu", { bg = "NONE", fg = "#c8c093" })
-vim.api.nvim_set_hl(0, "BlinkCmpMenuSelection", { bg = "#202028", fg = "#E7C664", bold = true })
-vim.api.nvim_set_hl(0, "BlinkCmpMenuBorder", { fg = "#c8c093" })
-vim.api.nvim_set_hl(0, "BlinkCmpLabel", { fg = "#7B7A7B", bg = "NONE" })
--- Syntax-specific highlight tweaks
+-- Custom Blink appearance vim.api.nvim_set_hl(0, "BlinkCmpMenu", { bg = "NONE", fg = "#c8c093" })
+vim.api.nvim_set_hl(0, "BlinkCmpMenuSelection", { bg = "NONE", fg = "#E7C664", bold = true })
+vim.api.nvim_set_hl(0, "BlinkCmpMenuBorder", { fg = "#908caa" })
+vim.api.nvim_set_hl(0, "BlinkCmpLabel", { fg = "#c8c093", bg = "#202028" })
+vim.api.nvim_set_hl(0, "BlinkCmpLabelDescription", { fg = "#c8c093", bg = "#202028" })
+vim.api.nvim_set_hl(0, "BlinkCmpDoc", { fg = "#E7C664", bg = "NONE" })
+vim.api.nvim_set_hl(0, "BlinkCmpDocBorder", { fg = "#908caa" })
 vim.cmd([[
   hi link @property Identifier
 ]])

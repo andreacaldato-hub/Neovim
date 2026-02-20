@@ -8,8 +8,7 @@ return {
 	-- 		vim.g.sonokai_transparent_background = 1
 	--
 	-- 		vim.cmd("colorscheme sonokai")
-	--
-	-- 		local hi = vim.api.nvim_set_hl
+	-- local hi = vim.api.nvim_set_hl
 	--
 	-- 		-- Core transparency
 	--
@@ -41,6 +40,7 @@ return {
 	name = "rose-pine",
 	config = function()
 		vim.cmd("colorscheme rose-pine")
+
 		require("rose-pine").setup({
 			variant = "moon", -- auto, main, moon, or dawn
 			dark_variant = "main", -- main, moon, or dawn
@@ -49,7 +49,7 @@ return {
 
 			enable = {
 				terminal = true,
-				legacy_highlights = true, -- Improve compatibility for previous versions of Neovim
+				legacy_highlights = false, -- Improve compatibility for previous versions of Neovim
 				migrations = true, -- Handle deprecated options automatically
 			},
 
@@ -124,5 +124,33 @@ return {
 		-- vim.cmd("colorscheme rose-pine-main")
 		-- vim.cmd("colorscheme rose-pine-moon")
 		-- vim.cmd("colorscheme rose-pine-dawn")
+		--
+		local hi = vim.api.nvim_set_hl
+		-- Core transparency
+		--Floating windows
+		hi(0, "NormalFloat", { bg = "none" })
+		hi(0, "FloatBorder", { bg = "none" })
+		-- -- Lazy.nvim
+		hi(0, "LazyNormal", { bg = "none" })
+		-- Mason
+		hi(0, "MasonNormal", { bg = "none" })
+		-- Prevent overwrite on reload
+		vim.api.nvim_create_autocmd("ColorScheme", {
+			pattern = "*",
+			callback = function()
+				hi(0, "NormalFloat", { bg = "none" })
+				hi(0, "FloatBorder", { bg = "none" })
+				hi(0, "BlinkCmpDoc", { bg = "none" })
+				hi(0, "BlinkCmpDocBorder", { bg = "none" })
+				hi(0, "CmpDocumentation", { bg = "none" })
+				hi(0, "CmpDocumentationBorder", { bg = "none" })
+				hi(0, "Pmenu", { bg = "none" })
+				hi(0, "PmenuSel", { bg = "none" })
+				hi(0, "LazyNormal", { bg = "none" })
+				hi(0, "MasonNormal", { bg = "none" })
+				hi(0, "NeoTreeNormal", { bg = "none" })
+				hi(0, "NeoTreeFloat", { bg = "none" })
+			end,
+		})
 	end,
 }

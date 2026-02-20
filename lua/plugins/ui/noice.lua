@@ -206,4 +206,55 @@ return {
 			format = {}, --- @see section on formatting
 		})
 	end,
+	config = function()
+		local notify = require("notify")
+
+		notify.setup({
+			-- Use Rosé Pine-like transparent background
+			background_colour = "#000000", -- so it inherits your terminal transparency
+
+			-- Staggered fade in/out
+			stages = "fade_in_slide_out",
+
+			-- Animation speed in milliseconds
+			timeout = 2500,
+
+			-- Minimum width for notifications
+			minimum_width = 40,
+
+			-- Maximum width (prevents huge wide popups)
+			maximum_width = 80,
+
+			-- Render icons if supported
+			render = "default",
+
+			-- Top-right corner (classic)
+			top_down = true,
+
+			-- Floating window options
+			-- on_open = function(win)
+			-- 	-- Make the floating window transparent
+
+			-- Highlights for the notification types
+			icons = {
+				ERROR = "",
+				WARN = "",
+				INFO = "",
+				DEBUG = "",
+				TRACE = "✎",
+			},
+
+			-- Custom highlights matching Rosé Pine
+			levels = {
+				ERROR = { fg = "#eb6f92", bg = "#000000" }, -- Love red
+				WARN = { fg = "#f6c177", bg = "#000000" }, -- Gold
+				INFO = { fg = "#9ccfd8", bg = "#000000" }, -- Foam
+				DEBUG = { fg = "#ebbcba", bg = "#000000" }, -- Rose
+				TRACE = { fg = "#31748f", bg = "#000000" }, -- Iris
+			},
+		})
+
+		-- Optional: override vim.notify to use nvim-notify
+		vim.notify = notify
+	end,
 }
