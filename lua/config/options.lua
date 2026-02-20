@@ -43,21 +43,18 @@ vim.opt.splitkeep = "cursor"
 vim.opt.mouse = ""
 
 vim.api.nvim_create_autocmd("ColorScheme", {
-    callback = function()
-        vim.api.nvim_set_hl(0, "CursorLineNr", {
-            fg = "#e6c384",
-            bold = true,
-        })
-    end,
-})
-
-
-vim.api.nvim_set_hl(0, "CursorLine", {
-    bg = "#202028", -- example dark highlight
+	callback = function()
+		vim.api.nvim_set_hl(0, "CursorLineNr", {
+			fg = "#e6c384",
+			bold = true,
+		})
+	end,
 })
 
 vim.opt.cursorline = true
 
+-- Remove line background but keep number styling
+vim.api.nvim_set_hl(0, "CursorLine", { bg = "#070707" })
 vim.opt.timeout = false
 vim.opt.ttimeout = true
 vim.opt.ttimeoutlen = 9
@@ -70,13 +67,13 @@ vim.g.vimtex_compiler_method = "latexmk"
 vim.g.vimtex_view_general_options = "--synctex-forward @line:@col:@tex --no-guess"
 
 vim.api.nvim_create_user_command("LatexBuild", function()
-    local tex_file = vim.fn.expand("%:p")
-    local pdf_file = tex_file:gsub("%.tex$", ".pdf")
+	local tex_file = vim.fn.expand("%:p")
+	local pdf_file = tex_file:gsub("%.tex$", ".pdf")
 
-    -- Compile the .tex file
-    vim.cmd("VimtexCompile")
+	-- Compile the .tex file
+	vim.cmd("VimtexCompile")
 
-    -- Open Zathura in a Kitty split
-    vim.fn.system("kitty --detach zathura " .. pdf_file)
+	-- Open Zathura in a Kitty split
+	vim.fn.system("kitty --detach zathura " .. pdf_file)
 end, {})
 -- Function to compile and open PDF in vertical split
