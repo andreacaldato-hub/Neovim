@@ -8,6 +8,10 @@ return {
 	---@module 'blink.cmp'
 	---@type blink.cmp.Config
 	opts = {
+
+		sources = {
+			default = { "lsp", "path", "snippets", "buffer" },
+		},
 		keymap = {
 			["<C-space>"] = { "show", "show_documentation", "hide_documentation" },
 			["<C-e>"] = { "hide", "fallback" },
@@ -27,6 +31,7 @@ return {
 
 		completion = {
 			accept = { auto_brackets = { enabled = true } },
+			list = { selection = { preselect = false, auto_insert = false } },
 
 			documentation = {
 				auto_show = true,
@@ -49,7 +54,7 @@ return {
 
 				draw = {
 					columns = {
-						{ "kind_icon", "label", gap = 1 },
+						{ "kind_icon", "label", gap = 2 },
 						{ "kind" },
 					},
 					components = {

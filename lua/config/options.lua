@@ -29,7 +29,7 @@ vim.opt.inccommand = "split"
 vim.opt.ignorecase = true
 vim.opt.smarttab = true
 vim.opt.breakindent = true
-vim.opt.shiftwidth = 4
+vim.opt.shiftwidth = 2
 vim.opt.tabstop = 2
 vim.opt.swapfile = false
 vim.opt.softtabstop = 4
@@ -54,7 +54,6 @@ vim.api.nvim_create_autocmd("ColorScheme", {
 vim.opt.cursorline = true
 
 -- Remove line background but keep number styling
-vim.api.nvim_set_hl(0, "CursorLine", { bg = "#070707" })
 vim.opt.timeout = false
 vim.opt.ttimeout = true
 vim.opt.ttimeoutlen = 9
@@ -77,3 +76,11 @@ vim.api.nvim_create_user_command("LatexBuild", function()
 	vim.fn.system("kitty --detach zathura " .. pdf_file)
 end, {})
 -- Function to compile and open PDF in vertical split
+vim.api.nvim_create_autocmd("TextYankPost", {
+	callback = function()
+		vim.highlight.on_yank({
+			higroup = "IncSearch",
+			timeout = 200,
+		})
+	end,
+})

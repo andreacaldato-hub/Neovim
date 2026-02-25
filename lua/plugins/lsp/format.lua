@@ -1,7 +1,8 @@
 -- Toggle format on save
 local format_on_save_enabled = true
 
-vim.keymap.set("n", "<leader>tf", function()
+vim.keymap.set("n", "<leader>ft", function()
+  ciao
 	format_on_save_enabled = not format_on_save_enabled
 
 	require("conform").setup({

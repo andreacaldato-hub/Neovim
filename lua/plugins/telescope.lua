@@ -25,18 +25,6 @@ return {
 				},
 			})
 
-			-- Highlight the bar and selection
-			vim.cmd([[
-  " Red vertical bar on the left
-  hi TelescopeSelectionCaret guifg=NONE guibg=NONE gui=bold
-  " Darker background for selected line
-  hi TelescopeSelection guifg=NONE guibg=NONE gui=bold
-  " Transparent background for everything else
-  hi TelescopeNormal guibg=NONE
-  " Matching characters in green
-  hi TelescopeMatching guifg=#EA9A97 guibg = NONE
-]])
-
 			telescope.load_extension("fzf")
 
 			-- Put this inside your config = function() after telescope.load_extension("fzf")

@@ -178,24 +178,14 @@ vim.api.nvim_set_keymap("n", "<leader>t", ":lua OpenTmuxSplit()<CR>", { noremap 
 local map = vim.keymap.set
 local opts = { noremap = true, silent = true }
 
--- Track running live servers
 local live_servers = {}
 
--- Hash dir into unique port between 3000–3999
+-- Get a fixed port (easier for debugging)
 local function get_port_from_dir(dir)
-	local hash = 0
-	for i = 1, #dir do
-		hash = (hash * 31 + dir:byte(i)) % 10000
-	end
-	return 3000 + (hash % 1000)
+	return 3000 -- you can later hash if needed
 end
 
--- Check if file is within the directory
-local function is_file_in_dir(file, dir)
-	return vim.startswith(file, dir)
-end
-
--- Start live-server for current file's dir
+-- Start live-server
 map("n", "<leader>bs", function()
 	local dir = vim.fn.expand("%:p:h")
 	if live_servers[dir] then
@@ -206,41 +196,34 @@ map("n", "<leader>bs", function()
 	local port = get_port_from_dir(dir)
 	live_servers[dir] = port
 
-	local cmd = {
-		"live-server",
-		"--port=" .. port,
-		"--quiet",
-		"--no-browser",
-	}
-
+	-- Start live-server
+	local cmd = { "live-server", "--port=" .. port, "--no-browser" }
 	vim.fn.jobstart(cmd, {
 		cwd = dir,
 		detach = true,
 		on_exit = function()
 			live_servers[dir] = nil
+			print("Live server stopped for: " .. dir)
 		end,
 	})
 
 	print("Live server started at http://localhost:" .. port)
 end, opts)
 
--- Open current file with live server
+-- Open current file in browser
 map("n", "<leader>b", function()
-	local file = vim.fn.expand("%:p")
+	local file = vim.fn.expand("%:t")
 	local dir = vim.fn.expand("%:p:h")
-	local file_name = vim.fn.expand("%:t")
-
-	local port = live_servers[dir] or get_port_from_dir(dir)
-
-	if not is_file_in_dir(file, dir) then
-		print("File is not inside live server root: " .. dir)
+	local port = live_servers[dir]
+	if not port then
+		print("No live server running, start with <leader>bs")
 		return
 	end
-
-	local url = string.format("http://localhost:%d/%s", port, file_name)
+	local url = string.format("http://localhost:%d/%s", port, file)
 	vim.fn.jobstart({ "firefox", url }, { detach = true })
 end, opts)
---    print("Not an HTML file.")
+
+-- Stop server
 map("n", "<leader>bx", function()
 	local dir = vim.fn.expand("%:p:h")
 	local port = live_servers[dir]
@@ -250,44 +233,24 @@ map("n", "<leader>bx", function()
 	end
 	vim.fn.jobstart({ "pkill", "-f", "live-server.*" .. port }, {
 		on_exit = function()
-			print("Stopped live server on port " .. port)
 			live_servers[dir] = nil
+			print("Stopped live server on port " .. port)
 		end,
 	})
 end, opts)
--- Show currently running live servers
-map("n", "<leader>bl", function()
-	local count = 0
-	for dir, port in pairs(live_servers) do
-		print("🟢 " .. dir .. " → http://localhost:" .. port)
-		count = count + 1
-	end
-	if count == 0 then
-		print("No live servers running.")
-	else
-		print(count .. " live server(s) running.")
-	end
-end, opts)
 
--- Kill all running live servers
-map("n", "<leader>bk", function()
-	local count = 0
-	for dir, port in pairs(live_servers) do
-		vim.fn.jobstart({ "pkill", "-f", "live-server.*" .. port }, {
-			on_exit = function()
-				print("🛑 Stopped live server on port " .. port)
-			end,
-		})
-		live_servers[dir] = nil
-		count = count + 1
-	end
-	if count == 0 then
-		print("No live servers were running.")
-	else
-		print("Killed " .. count .. " live server(s).")
-	end
-end, opts)
--- Auto-disable autoindent when pasting
+-- Auto reload on save
+vim.api.nvim_create_autocmd("BufWritePost", {
+	pattern = { "*.html", "*.css", "*.js" },
+	callback = function()
+		local dir = vim.fn.expand("%:p:h")
+		if live_servers[dir] then
+			-- touch a dummy file to trigger live-server reload
+			local reload_file = dir .. "/.reload"
+			vim.fn.writefile({}, reload_file)
+		end
+	end,
+}) -- Auto-disable autoindent when pasting
 vim.api.nvim_create_autocmd("TextYankPost", {
 	pattern = "*",
 	callback = function()
