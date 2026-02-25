@@ -1,17 +1,13 @@
 return {
 	"saghen/blink.cmp",
+	version = "*",
 	dependencies = {
 		"rafamadriz/friendly-snippets",
-		"onsails/lspkind.nvim",
+		"xzbdmw/colorful-menu.nvim",
 	},
-	version = "1.*",
 	---@module 'blink.cmp'
 	---@type blink.cmp.Config
 	opts = {
-
-		sources = {
-			default = { "lsp", "path", "snippets", "buffer" },
-		},
 		keymap = {
 			["<C-space>"] = { "show", "show_documentation", "hide_documentation" },
 			["<C-e>"] = { "hide", "fallback" },
@@ -23,66 +19,100 @@ return {
 			["<C-d>"] = { "scroll_documentation_down", "fallback" },
 			["<C-u>"] = { "scroll_documentation_up", "fallback" },
 		},
-
 		appearance = {
-			use_nvim_cmp_as_default = false,
+			use_nvim_cmp_as_default = true,
 			nerd_font_variant = "mono",
 		},
-
 		completion = {
-			accept = { auto_brackets = { enabled = true } },
-			list = { selection = { preselect = false, auto_insert = false } },
+			list = {
+				selection = {
+					preselect = false,
+					auto_insert = false,
+				},
+			},
+			menu = {
+				border = "rounded",
+				draw = {
+					-- Organizzazione: Icona | Label (testo principale) | Kind (testo a destra)
+					columns = {
+						{ "kind_icon" },
+						{ "label", gap = 1 },
+						{ "kind", gap = 1 },
+					},
+					components = {
+						-- 1. Icona stilizzata
+						kind_icon = {
+							ellipsis = false,
+							text = function(ctx)
+								local icons = {
+									Text = "󰉿",
+									Method = "󰊕",
+									Function = "󰊕",
+									Constructor = "",
+									Field = "󰜢",
+									Variable = "󰆦",
+									Class = "󰠱",
+									Interface = "",
+									Module = "",
+									Property = "󰜢",
+									Unit = "󰑭",
+									Value = "󰎠",
+									Enum = "",
+									Keyword = "󰌋",
+									Snippet = "",
+									Color = "󰏘",
+									File = "󰈙",
+									Reference = "󰈚",
+									Folder = "󰉋",
+									EnumMember = "",
+									Constant = "󰏿",
+									Struct = "󰙅",
+									Event = "",
+									Operator = "󰆕",
+									TypeParameter = "󰅲",
+								}
+								return icons[ctx.kind] or "󰧑"
+							end,
+							highlight = function(ctx)
+								return "BlinkCmpKind" .. ctx.kind
+							end,
+						},
 
+						-- 2. Testo principale colorato (colorful-menu)
+						label = {
+							width = { fill = true, max = 60 },
+							text = function(ctx)
+								return require("colorful-menu").blink_components_text(ctx)
+							end,
+							highlight = function(ctx)
+								return require("colorful-menu").blink_components_highlight(ctx)
+							end,
+						},
+
+						-- 3. Testo a destra (Tipo di oggetto)
+						kind = {
+							ellipsis = true,
+							width = { min = 10 },
+							text = function(ctx)
+								return "[" .. ctx.kind .. "]"
+							end,
+							highlight = function(ctx)
+								-- Usiamo un colore più discreto per la parte destra
+								return "NonText"
+							end,
+						},
+					},
+				},
+			},
 			documentation = {
 				auto_show = true,
 				auto_show_delay_ms = 250,
 				treesitter_highlighting = true,
 				window = { border = "rounded" },
 			},
-			menu = {
-				scrollbar = false,
-				border = "rounded",
-
-				-- cmdline_position = function()
-				--     if vim.g.ui_cmdline_pos ~= nil then
-				--         local pos = vim.g.ui_cmdline_pos -- (1, 0)-indexed
-				--         return { pos[1] - 1, pos[2] }
-				--     end
-				--     local height = (vim.o.cmdheight == 0) and 1 or vim.o.cmdheight
-				--     return { vim.o.lines - height, 0 }
-				-- end,
-
-				draw = {
-					columns = {
-						{ "kind_icon", "label", gap = 2 },
-						{ "kind" },
-					},
-					components = {
-						kind_icon = {
-							text = function(item)
-								local kind = require("lspkind").symbol_map[item.kind] or ""
-								return kind .. " "
-							end,
-							highlight = "CmpItemKind",
-						},
-						label = {
-							text = function(item)
-								return item.label
-							end,
-							highlight = "CmpItemAbbr",
-						},
-						kind = {
-							text = function(item)
-								return item.kind
-							end,
-							highlight = "CmpItemKind",
-						},
-					},
-				},
-			},
-			--fuzzy = { implementation = "prefer_rust_with_warning" }
 		},
-		-- See the fuzzy documentation for more information
+		sources = {
+			default = { "lsp", "path", "snippets", "buffer" },
+		},
 	},
-	opts_extend = { "sources.default" },
 }

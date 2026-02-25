@@ -41,16 +41,6 @@ vim.opt.splitbelow = true
 vim.opt.splitright = true
 vim.opt.splitkeep = "cursor"
 vim.opt.mouse = ""
-
-vim.api.nvim_create_autocmd("ColorScheme", {
-	callback = function()
-		vim.api.nvim_set_hl(0, "CursorLineNr", {
-			fg = "#e6c384",
-			bold = true,
-		})
-	end,
-})
-
 vim.opt.cursorline = true
 
 -- Remove line background but keep number styling

@@ -8,7 +8,6 @@ return {
 		},
 		config = function()
 			local telescope = require("telescope")
-			local previewers = require("telescope.previewers")
 			local builtin = require("telescope.builtin")
 			local home = vim.fn.expand("~")
 
@@ -55,6 +54,16 @@ return {
 			end, { desc = "Find home files" })
 
 			vim.keymap.set("n", "<leader>fb", builtin.buffers, { desc = "Buffers" })
+			vim.api.nvim_set_hl(0, "TelescopeBorder", { fg = "#1f2329" })
+			vim.api.nvim_set_hl(0, "TelescopePromptBorder", { fg = "#1f2329" })
+			vim.api.nvim_set_hl(0, "TelescopeResultsBorder", { fg = "#1f2329" })
+			vim.api.nvim_set_hl(0, "TelescopePreviewBorder", { fg = "#1f2329" })
+			vim.api.nvim_set_hl(0, "TelescopeSelectionCaret", {
+				fg = "#d7005f", -- pick your color
+				bg = "NONE",
+				bold = true,
+			})
+			vim.api.nvim_set_hl(0, "TelescopeMatching", { fg = "#8ebd6b", bold = true })
 		end,
 	},
 }

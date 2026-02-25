@@ -7,7 +7,7 @@ return -- Using Lazy
 		-- Lua
 		require("onedark").setup({
 			-- Main options --
-			style = "dark", -- Default theme style. Choose between 'dark', 'darker', 'cool', 'deep', 'warm', 'warmer' and 'light'
+			style = "darker", -- Default theme style. Choose between 'dark', 'darker', 'cool', 'deep', 'warm', 'warmer' and 'light'
 			transparent = true, -- Show/hide background
 			term_colors = true, -- Change terminal color as per the selected theme style
 			ending_tildes = false, -- Show the end-of-buffer tildes. By default they are hidden
@@ -22,21 +22,40 @@ return -- Using Lazy
 			-- You can configure multiple style with comma separated, For e.g., keywords = 'italic,bold'
 			code_style = {
 				comments = "italic",
-				keywords = "none",
+				keywords = "italic",
 				functions = "italic",
-				strings = "none",
-				variables = "none",
+				strings = "italic",
+				variables = "italic",
 			},
 
 			-- Lualine options --
 			lualine = {
-				transparent = false, -- lualine center bar transparency
+				transparent = true, -- lualine center bar transparency
 			},
 
 			-- Custom Highlights --
-			colors = {}, -- Override default colors
-			highlights = {}, -- Override highlight groups
-
+			colors = {
+				-- purple = "#A23E48",
+				-- cyan = "#c0c0c0",
+				-- orange = "#e8c88c",
+				-- green = "#a3be8c",
+			},
+			-- All'interno di require("onedark").setup({ ...
+			highlights = {
+				-- Funzioni standard (es. printf) e globali
+				-- ["@lsp.type.function"] = { fg = "$purple", fmt = "italic" },
+				-- ["@lsp.typemod.function.defaultLibrary"] = { fg = "$purple", fmt = "italic" },
+				-- ["@lsp.typemod.function.globalScope"] = { fg = "$purple", fmt = "italic" },
+				--
+				-- -- Modificatori (per essere sicuri che il colore "tenga")
+				-- ["@lsp.mod.defaultLibrary"] = { fg = "$purple" },
+				-- ["@lsp.mod.globalScope"] = { fg = "$purple" },
+				--
+				-- -- Manteniamo l'include rosso/purple come prima
+				-- ["cInclude"] = { fg = "#94C5CC" },
+				-- ["Repeat"] = { fg = "#94C5CC" },
+				-- ["cPreProc"] = { fg = "#94C5CC" },
+			},
 			-- Plugins Config --
 			diagnostics = {
 				darker = true, -- darker colors for diagnostic
