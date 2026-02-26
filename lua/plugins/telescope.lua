@@ -63,7 +63,7 @@ return {
 				bg = "NONE",
 				bold = true,
 			})
-			vim.api.nvim_set_hl(0, "TelescopeMatching", { fg = "#8ebd6b", bold = true })
+			vim.api.nvim_set_hl(0, "TelescopeMatching", { fg = "#E6B450", bold = false })
 		end,
 	},
 }

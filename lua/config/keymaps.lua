@@ -1,7 +1,7 @@
 -- Keymaps are automatically loaded on the VeryLazy event
 -- Set leader key to space
 vim.keymap.set({ "n", "v" }, "<Space>", "<Nop>", { silent = true })
-local opts = { noremap = true, silent = true }
+--local opts = { noremap = true, silent = true }
 -- Normal paste (keep defaults, but we set explicitly)
 vim.keymap.set("n", "P", "P")
 vim.keymap.set({ "n", "v" }, "d", '"_d')
