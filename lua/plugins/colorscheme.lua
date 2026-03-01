@@ -1,21 +1,34 @@
 return {
-	"tiagovla/tokyodark.nvim",
+	"sainnhe/gruvbox-material",
+	lazy = false,
 	priority = 1000,
-	opts = {
-		transparent_background = true,
-		gamma = 1.0,
-		styles = {
-			comments = { italic = true },
-			keywords = { italic = true },
-			identifiers = { italic = true },
-			functions = { italic = true },
-			variables = { italic = true },
-		},
-	},
-	config = function(_, opts)
-		require("tokyodark").setup(opts)
-		vim.cmd([[colorscheme tokyodark]])
+	config = function()
+		-- Configuration options (must be set before loading the colorscheme)
+		vim.g.gruvbox_material_background = "soft" -- 'soft', 'medium', 'hard'
+		vim.g.gruvbox_material_foreground = "mix" -- 'material', 'mix', 'original'
+		vim.g.gruvbox_material_better_performance = 1
+		vim.g.gruvbox_material_transparent_background = 1
+		-- Add this to your custom highlight function
+		vim.api.nvim_set_hl(0, "String", { fg = "#89b482", italic = true }) -- Gruvbox Aqua
+		vim.cmd.colorscheme("gruvbox-material")
 	end,
+	-- "tiagovla/tokyodark.nvim",
+	-- priority = 1000,
+	-- opts = {
+	-- 	transparent_background = true,
+	-- 	gamma = 1.0,
+	-- 	styles = {
+	-- 		comments = { italic = true },
+	-- 		keywords = { italic = true },
+	-- 		identifiers = { italic = true },
+	-- 		functions = { italic = true },
+	-- 		variables = { italic = true },
+	-- 	},
+	-- },
+	-- config = function(_, opts)
+	-- 	require("tokyodark").setup(opts)
+	-- 	vim.cmd([[colorscheme tokyodark]])
+	-- end,
 } -- version = "v0.1.0", -- Pin to legacy version
 -- priority = 1000,
 -- config = function()
