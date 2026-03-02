@@ -1,5 +1,6 @@
 return {
 	"folke/snacks.nvim",
+
 	priority = 1000,
 	lazy = false,
 	---@type snacks.Config
@@ -195,6 +196,13 @@ return {
 			desc = "Search History",
 		},
 		{
+			"<leader>sk",
+			function()
+				Snacks.picker.keymaps()
+			end,
+			desc = "Keymaps",
+		},
+		{
 			"<leader>sa",
 			function()
 				Snacks.picker.autocmds()
@@ -264,13 +272,7 @@ return {
 			end,
 			desc = "Jumps",
 		},
-		{
-			"<leader>sk",
-			function()
-				Snacks.picker.keymaps()
-			end,
-			desc = "Keymaps",
-		},
+
 		{
 			"<leader>sl",
 			function()
