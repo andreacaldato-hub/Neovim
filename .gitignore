@@ -1,0 +1,30 @@
+# Neovim swap / undo / backup / temp files
+*.swp
+*.swo
+*.swn
+*.un~
+*.bak
+*.tmp
+
+# Persistent undo / swap dirs
+undo/
+swap/
+backup/
+
+# Lazy.nvim plugin directory
+lazy-lock.json
+lazy/
+site/
+
+# Log files
+*.log
+
+# Session files
+Session.vim
+
+# Mac / system files
+.DS_Store
+Thumbs.db
+
+# Optional: ignore nvim compiled scripts
+*.luac
