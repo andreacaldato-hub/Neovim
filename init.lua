@@ -8,7 +8,7 @@ local function set_blink_hl()
 	vim.api.nvim_set_hl(0, "BlinkCmpLabelDescription", { fg = "#c8c093", bg = "NONE" })
 	vim.api.nvim_set_hl(0, "BlinkCmpDoc", { fg = "#c0c0c0", bg = "NONE" })
 	vim.api.nvim_set_hl(0, "BlinkCmpDocBorder", { fg = "#1f2329" })
-	vim.api.nvim_set_hl(0, "CursorLine", { bg = "#000000" })
+	vim.api.nvim_set_hl(0, "CursorLine", { bg = "#0A0A0A" })
 	vim.api.nvim_set_hl(0, "BlinkCmpLabelMatch", {
 
 		fg = "NONE", -- Usa lo stesso colore che hai impostato per "BlinkCmpLabel"
