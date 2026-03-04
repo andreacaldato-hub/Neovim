@@ -17,7 +17,7 @@ local function set_blink_hl()
 		nocombine = true, -- Importante: impedisce ad altri hl di combinarsi sopra
 	})
 
-    vim.api.nvim_set_hl(0, "String", { fg = "#89b482", italic = true }) -- Gruvbox Aqua
+	vim.api.nvim_set_hl(0, "String", { fg = "#89b482", italic = true }) -- Gruvbox Aqua
 	vim.api.nvim_set_hl(0, "BlinkCmpLabelMatchDescription", {
 		fg = "NONE",
 		bg = "NONE",
@@ -25,3 +25,6 @@ local function set_blink_hl()
 	})
 end
 vim.api.nvim_create_autocmd({ "VimEnter", "ColorScheme" }, { callback = set_blink_hl })
+-- This removes the background color from all floating windows
+vim.api.nvim_set_hl(0, "NormalFloat", { bg = "none" })
+vim.api.nvim_set_hl(0, "FloatBorder", { bg = "none" })
