@@ -13,6 +13,15 @@ return {
 					previewer = true, -- enable built-in previewer (bat for files)
 					grouped = true, -- enable built-in previewer (bat for files)
 					git_status = false,
+					git_icons = {
+						added = "A",
+						changed = "M",
+						copied = "C",
+						deleted = "D",
+						renamed = "R",
+						unmerged = "U",
+						untracked = "?",
+					},
 				},
 			},
 		})
