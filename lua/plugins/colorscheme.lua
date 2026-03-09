@@ -4,8 +4,8 @@ return {
 	priority = 1000,
 	config = function()
 		-- Configuration options (must be set before loading the colorscheme)
-		vim.g.gruvbox_material_background = "soft" -- 'soft', 'medium', 'hard'
-		vim.g.gruvbox_material_foreground = "mix" -- 'material', 'mix', 'original'
+		vim.g.gruvbox_material_background = "hard" -- 'soft', 'medium', 'hard'
+		vim.g.gruvbox_material_foreground = "original" -- 'material', 'mix', 'original'
 		vim.g.gruvbox_material_better_performance = 1
 		vim.g.gruvbox_material_transparent_background = 1
 		-- Add this to your custom highlight function

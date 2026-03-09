@@ -23,9 +23,9 @@ return {
 						ft_icon and { " ", ft_icon, " ", guibg = ft_color, guifg = helpers.contrast_color(ft_color) }
 							or "",
 						" ",
-						{ filename, gui = modified and "bold,italic" or nil, guifg = "#a8acb3" },
+						{ filename, gui = modified and "italic" or nil, guifg = "#EBDBB2" },
 						" ",
-						guibg = "#070707",
+						guibg = "NONE",
 					}
 					return buffer
 				end,
