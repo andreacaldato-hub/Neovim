@@ -54,10 +54,11 @@ return {
 			end, { desc = "Find home files" })
 
 			vim.keymap.set("n", "<leader>fb", builtin.buffers, { desc = "Buffers" })
-			vim.api.nvim_set_hl(0, "TelescopeBorder", { fg = "#1f2329" })
-			vim.api.nvim_set_hl(0, "TelescopePromptBorder", { fg = "#1f2329" })
-			vim.api.nvim_set_hl(0, "TelescopeResultsBorder", { fg = "#1f2329" })
-			vim.api.nvim_set_hl(0, "TelescopePreviewBorder", { fg = "#1f2329" })
+			vim.api.nvim_set_hl(0, "TelescopeBorder", { fg = "#3D3D3D" })
+			vim.api.nvim_set_hl(0, "TelescopeSelection", { bg = "#3D3D3D", fg = "NONE" })
+			vim.api.nvim_set_hl(0, "TelescopePromptBorder", { fg = "#3D3D3D" })
+			vim.api.nvim_set_hl(0, "TelescopeResultsBorder", { fg = "#3D3D3D" })
+			vim.api.nvim_set_hl(0, "TelescopePreviewBorder", { fg = "#3D3D3D" })
 			vim.api.nvim_set_hl(0, "TelescopeSelectionCaret", {
 				fg = "#d7005f", -- pick your color
 				bg = "NONE",
