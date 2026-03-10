@@ -171,3 +171,8 @@ map("n", "<leader>r", ":silent !riscv64-elf-gcc -nostdlib -nostartfiles -o %:r.e
 
 -- ─── Cleanup conflicting LazyVim defaults ────────────────────────────────────
 vim.keymap.del("n", "<leader>xs")
+map("n", "<leader>?", function()
+	require("telescope.builtin").keymaps({
+		modes = { "n", "v", "x", "i", "o", "t" },
+	})
+end, { desc = "Search keymaps" })
