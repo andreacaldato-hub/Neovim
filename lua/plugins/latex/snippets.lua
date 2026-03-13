@@ -241,7 +241,8 @@ ls.add_snippets("tex", {
 	s("rr", { t("\\mathbb{R}") }),
 	s("inc", { t("\\subset ") }),
 	s("uni", { t("\\cup ") }),
-	s("int", { t("\\cap ") }),
+	s("inter", { t("\\cap ") }),
+	s("emp", { t("\\emptyset ") }),
 	s("neg", { t("\\overline ") }),
 	s("ov", { t("\\bar ") }),
 	s("ul", { t("\\underline{"), i(1), t("}") }),
@@ -262,6 +263,7 @@ ls.add_snippets("tex", {
 	s("()", { t("\\left("), i(1), t("\\right)") }),
 	s("[]", { t("\\left["), i(1), t("\\right]") }),
 	s("{}", { t("\\left\\{"), i(1), t("\\right\\}") }),
+	s("mm", { t("$"), i(1), t("$") }),
 	-- Logic derivability (|-L)
 	s("der", { t("\\vdash ") }),
 	s("box", { t("\\Box ") }),
