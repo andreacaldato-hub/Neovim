@@ -12,7 +12,7 @@ vim.opt.title = true
 vim.opt.wrap = true
 vim.opt.autoindent = true
 vim.opt.smartindent = true
-vim.opt.hlsearch = false
+vim.opt.hlsearch = true
 vim.opt.incsearch = true
 vim.opt.termguicolors = true
 vim.opt.equalalways = false
@@ -33,7 +33,6 @@ vim.opt.shiftwidth = 2
 vim.opt.tabstop = 2
 vim.opt.swapfile = false
 vim.opt.softtabstop = 4
-vim.opt.wrap = false
 vim.opt.backspace = { "start", "eol", "indent" }
 vim.opt.path:append({ "**" })
 vim.opt.wildignore:append({ "*/node_modules/*" })
@@ -41,7 +40,7 @@ vim.opt.splitbelow = true
 vim.opt.splitright = true
 vim.opt.splitkeep = "cursor"
 vim.opt.mouse = ""
-vim.opt.cursorline = true
+vim.opt.cursorline = false
 
 -- Remove line background but keep number styling
 vim.opt.timeout = false
