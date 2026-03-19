@@ -1,4 +1,4 @@
-vim.g.mapleader = " "
+-- mapleader is set in lazy.lua
 vim.opt.clipboard = "unnamedplus"
 vim.opt.shell = "/usr/bin/zsh"
 vim.opt.nu = true

@@ -144,16 +144,7 @@ return {
 				watch_gitdir = { follow_files = true },
 				auto_attach = true,
 				attach_to_untracked = true,
-				current_line_blame = true,
-				current_line_blame_opts = {
-					virt_text = true,
-					virt_text_pos = "eol",
-					delay = 1000,
-					ignore_whitespace = false,
-					virt_text_priority = 100,
-					use_focus = true,
-				},
-				current_line_blame_formatter = "<author>, <author_time:%R> - <summary>",
+				current_line_blame = false,
 				sign_priority = 6,
 				update_debounce = 100,
 				max_file_length = 40000,
@@ -193,7 +184,7 @@ return {
 					map("n", "<leader>gs", gitsigns.stage_hunk)
 
 					-- Discard the hunk under the cursor back to what's in the index
-					map("n", "<leader>gr", gitsigns.reset_hunk)
+					map("n", "<leader>rh", gitsigns.reset_hunk)
 
 					-- Stage a range of lines as a hunk (visual mode)
 					map("v", "<leader>hs", function()
@@ -201,7 +192,7 @@ return {
 					end)
 
 					-- Discard a range of lines back to what's in the index (visual mode)
-					map("v", "<leader>gvr", function()
+					map("v", "<leader>rvr", function()
 						gitsigns.reset_hunk({ vim.fn.line("."), vim.fn.line("v") })
 					end)
 
@@ -212,7 +203,7 @@ return {
 					map("n", "<leader>gX", gitsigns.reset_buffer)
 
 					-- Preview the hunk diff inline below the current line
-					map("n", "<leader>gi", gitsigns.preview_hunk_inline)
+					map("n", "<leader>ph", gitsigns.preview_hunk_inline)
 
 					-- Diff the current file against the index (staged version)
 					map("n", "<leader>gd", gitsigns.diffthis)

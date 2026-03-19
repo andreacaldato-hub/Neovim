@@ -2,6 +2,14 @@ return {
 	{
 		"nvim-telescope/telescope.nvim",
 		version = "*",
+		lazy = true,
+		keys = {
+			{ "<leader>ff", group = "Telescope" },
+			{ "<leader>fn", group = "Telescope" },
+			{ "<leader>fc", group = "Telescope" },
+			{ "<leader>fF", group = "Telescope" },
+			{ "<leader>fb", group = "Telescope" },
+		},
 		dependencies = {
 			"nvim-lua/plenary.nvim",
 			{ "nvim-telescope/telescope-fzf-native.nvim", build = "make" },

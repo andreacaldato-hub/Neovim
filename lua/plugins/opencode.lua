@@ -1,6 +1,13 @@
 return {
 	"nickjvandyke/opencode.nvim",
-	version = "*", -- Latest stable release
+	version = "*",
+	lazy = true,
+	keys = {
+		{ "<C-A>", mode = { "n", "x" }, group = "Opencode" },
+		{ "<C-a>", group = "Opencode" },
+		{ "<C-x>", mode = { "n", "x" }, group = "Opencode" },
+		{ "<leader>o", mode = { "n", "t" }, group = "Opencode" },
+	},
 	dependencies = {
 		{
 			-- `snacks.nvim` integration is recommended, but optional
