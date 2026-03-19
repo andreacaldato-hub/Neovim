@@ -12,7 +12,6 @@ return {
 	event = { "BufWritePre" },
 	opts = {
 		format_on_save = function(bufnr)
-			if not M.format_on_save_enabled then return end
 			return {
 				timeout_ms = 1000,
 				lsp_fallback = true,
