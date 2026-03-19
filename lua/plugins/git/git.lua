@@ -196,9 +196,6 @@ return {
 						gitsigns.reset_hunk({ vim.fn.line("."), vim.fn.line("v") })
 					end)
 
-					-- Stage every hunk in the entire buffer
-					map("n", "<leader>gB", gitsigns.stage_buffer)
-
 					-- Discard every hunk in the entire buffer back to HEAD
 					map("n", "<leader>gX", gitsigns.reset_buffer)
 
