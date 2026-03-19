@@ -176,3 +176,8 @@ map("n", "<leader>?", function()
 		modes = { "n", "v", "x", "i", "o", "t" },
 	})
 end, { desc = "Search keymaps" })
+-- In your toggleterm config, add after opts:
+map("n", "<leader>mR", function()
+	local line = vim.api.nvim_get_current_line()
+	require("toggleterm").exec(line)
+end, { desc = "Run MATLAB line in float" })

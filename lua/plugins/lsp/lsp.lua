@@ -25,15 +25,34 @@ vim.api.nvim_create_autocmd("LspAttach", {
 	end,
 })
 
--- Main LSP config
+local function on_attach(client, bufnr)
+	local opts = { buffer = bufnr, noremap = true }
+	vim.keymap.set("n", "gd", vim.lsp.buf.definition, opts)
+	vim.keymap.set("n", "gr", vim.lsp.buf.references, opts)
+	vim.keymap.set("n", "K", vim.lsp.buf.hover, opts)
+	vim.keymap.set("n", "gi", vim.lsp.buf.implementation, opts)
+	vim.keymap.set("n", "<leader>rn", vim.lsp.buf.rename, { buffer = bufnr, desc = "Rename symbol" })
+	vim.keymap.set("n", "<leader>ca", vim.lsp.buf.code_action, { buffer = bufnr, desc = "Code action" })
+end
+
+local capabilities = require("blink.cmp").get_lsp_capabilities()
+
 return {
 	"neovim/nvim-lspconfig",
 	config = function()
-		-- Mason setup
 		require("mason").setup({
 			registries = { "github:crashdummyy/mason-registry", "github:mason-org/mason-registry" },
 		})
-		require("mason-lspconfig").setup()
+		require("mason-lspconfig").setup({
+			handlers = {
+				function(server_name)
+					require("lspconfig")[server_name].setup({
+						on_attach = on_attach,
+						capabilities = capabilities,
+					})
+				end,
+			},
+		})
 		require("roslyn").setup()
 
 		-- Diagnostics configuration

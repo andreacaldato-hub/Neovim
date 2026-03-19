@@ -1,31 +1,31 @@
 return {
 	"stevearc/overseer.nvim",
 	keys = {
-		{
-			"<leader>or",
-			function()
-				local overseer = require("overseer")
-				-- 1. Start the task
-				overseer.run_template({ name = "C: Full Diagnostics (Leak + Speed)" }, function(task)
-					if task then
-						-- 2. Immediately open the float as soon as the task object exists
-						overseer.run_action(task, "open float")
-					end
-				end)
-			end,
-			desc = "Profiler: Run & Auto-Float",
-		},
-		{
-			"<leader>ov",
-			function()
-				local overseer = require("overseer")
-				local tasks = overseer.list_tasks({ recent = true })
-				if #tasks > 0 then
-					overseer.run_action(tasks[1], "open float")
-				end
-			end,
-			desc = "Profiler: Manual Toggle",
-		},
+		-- {
+		-- 	"<leader>or",
+		-- 	function()
+		-- 		local overseer = require("overseer")
+		-- 		-- 1. Start the task
+		-- 		overseer.run_template({ name = "C: Full Diagnostics (Leak + Speed)" }, function(task)
+		-- 			if task then
+		-- 				-- 2. Immediately open the float as soon as the task object exists
+		-- 				overseer.run_action(task, "open float")
+		-- 			end
+		-- 		end)
+		-- 	end,
+		-- 	desc = "Profiler: Run & Auto-Float",
+		-- },
+		-- {
+		-- 	"<leader>ov",
+		-- 	function()
+		-- 		local overseer = require("overseer")
+		-- 		local tasks = overseer.list_tasks({ recent = true })
+		-- 		if #tasks > 0 then
+		-- 			overseer.run_action(tasks[1], "open float")
+		-- 		end
+		-- 	end,
+		-- 	desc = "Profiler: Manual Toggle",
+		-- },
 	},
 	config = function()
 		local overseer = require("overseer")
