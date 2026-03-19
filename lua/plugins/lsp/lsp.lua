@@ -35,11 +35,10 @@ local function on_attach(client, bufnr)
 	vim.keymap.set("n", "<leader>ca", vim.lsp.buf.code_action, { buffer = bufnr, desc = "Code action" })
 end
 
-local capabilities = require("blink.cmp").get_lsp_capabilities()
-
 return {
 	"neovim/nvim-lspconfig",
 	config = function()
+		local capabilities = require("blink.cmp").get_lsp_capabilities()
 		require("mason").setup({
 			registries = { "github:crashdummyy/mason-registry", "github:mason-org/mason-registry" },
 		})
@@ -77,6 +76,7 @@ return {
 		})
 	end,
 	dependencies = {
+		"saghen/blink.cmp",
 		"seblyng/roslyn.nvim",
 		"mason-org/mason-lspconfig.nvim",
 		"mason-org/mason.nvim",
