@@ -21,14 +21,14 @@ vim.keymap.set({ "n", "v" }, "<leader>p", [["_dP]])
 
 -- Visual mode: replace selection with clipboard, force linewise, no yank
 map("x", "p", function()
-	local text = vim.fn.getreg("+")
-	local lines = vim.split(text, "\n")
-	-- remove trailing empty line if present
-	if lines[#lines] == "" then
-		table.remove(lines)
-	end
-	vim.cmd('normal! "_d')
-	vim.api.nvim_put(lines, "l", false, true)
+  local text = vim.fn.getreg("+")
+  local lines = vim.split(text, "\n")
+  -- remove trailing empty line if present
+  if lines[#lines] == "" then
+    table.remove(lines)
+  end
+  vim.cmd('normal! "_d')
+  vim.api.nvim_put(lines, "l", false, true)
 end)
 
 -- ─── Misc ─────────────────────────────────────────────────────────────────────
@@ -77,93 +77,94 @@ map("t", "<Esc>", [[<C-\><C-n>]], opts)
 map("t", "<leader>q", "<C-\\><C-n>:q<CR>", opts)
 
 function OpenTmuxSplit()
-	local file_path = vim.fn.expand("%:p:h")
-	local cmd = "tmux split-window -h -c " .. vim.fn.shellescape(file_path)
-	vim.fn.system(cmd)
+  local file_path = vim.fn.expand("%:p:h")
+  local cmd = "tmux split-window -h -c " .. vim.fn.shellescape(file_path)
+  vim.fn.system(cmd)
 end
+
 map("n", "<leader>t", ":lua OpenTmuxSplit()<CR>", opts)
 
 -- ─── Live server ──────────────────────────────────────────────────────────────
 local live_servers = {}
 
 local function get_port_from_dir()
-	return 3000
+  return 3000
 end
 
 map("n", "<leader>bs", function()
-	local dir = vim.fn.expand("%:p:h")
-	if live_servers[dir] then
-		print("Live server already running for: " .. dir)
-		return
-	end
-	local port = get_port_from_dir()
-	live_servers[dir] = port
-	vim.fn.jobstart({ "live-server", "--port=" .. port, "--no-browser" }, {
-		cwd = dir,
-		detach = true,
-		on_exit = function()
-			live_servers[dir] = nil
-			print("Live server stopped for: " .. dir)
-		end,
-	})
-	print("Live server started at http://localhost:" .. port)
+  local dir = vim.fn.expand("%:p:h")
+  if live_servers[dir] then
+    print("Live server already running for: " .. dir)
+    return
+  end
+  local port = get_port_from_dir()
+  live_servers[dir] = port
+  vim.fn.jobstart({ "live-server", "--port=" .. port, "--no-browser" }, {
+    cwd = dir,
+    detach = true,
+    on_exit = function()
+      live_servers[dir] = nil
+      print("Live server stopped for: " .. dir)
+    end,
+  })
+  print("Live server started at http://localhost:" .. port)
 end, opts)
 
 map("n", "<leader>b", function()
-	local file = vim.fn.expand("%:t")
-	local dir = vim.fn.expand("%:p:h")
-	local port = live_servers[dir]
-	if not port then
-		print("No live server running, start with <leader>bs")
-		return
-	end
-	vim.fn.jobstart({ "firefox", string.format("http://localhost:%d/%s", port, file) }, { detach = true })
+  local file = vim.fn.expand("%:t")
+  local dir = vim.fn.expand("%:p:h")
+  local port = live_servers[dir]
+  if not port then
+    print("No live server running, start with <leader>bs")
+    return
+  end
+  vim.fn.jobstart({ "firefox", string.format("http://localhost:%d/%s", port, file) }, { detach = true })
 end, opts)
 
 map("n", "<leader>bx", function()
-	local dir = vim.fn.expand("%:p:h")
-	local port = live_servers[dir]
-	if not port then
-		print("No live server running for this directory.")
-		return
-	end
-	vim.fn.jobstart({ "pkill", "-f", "live-server.*" .. port }, {
-		on_exit = function()
-			live_servers[dir] = nil
-			print("Stopped live server on port " .. port)
-		end,
-	})
+  local dir = vim.fn.expand("%:p:h")
+  local port = live_servers[dir]
+  if not port then
+    print("No live server running for this directory.")
+    return
+  end
+  vim.fn.jobstart({ "pkill", "-f", "live-server.*" .. port }, {
+    on_exit = function()
+      live_servers[dir] = nil
+      print("Stopped live server on port " .. port)
+    end,
+  })
 end, opts)
 
 -- ─── Auto reload live server on save ─────────────────────────────────────────
 vim.api.nvim_create_autocmd("BufWritePost", {
-	pattern = { "*.html", "*.css", "*.js" },
-	callback = function()
-		local dir = vim.fn.expand("%:p:h")
-		if live_servers[dir] then
-			vim.fn.writefile({}, dir .. "/.reload")
-		end
-	end,
+  pattern = { "*.html", "*.css", "*.js" },
+  callback = function()
+    local dir = vim.fn.expand("%:p:h")
+    if live_servers[dir] then
+      vim.fn.writefile({}, dir .. "/.reload")
+    end
+  end,
 })
 
 -- ─── Git info in tmux ─────────────────────────────────────────────────────────
 vim.api.nvim_create_autocmd("BufEnter", {
-	callback = function()
-		local file = vim.fn.expand("%:p")
-		if file == "" or vim.fn.filereadable(file) == 0 then
-			return
-		end
-		local file_dir = vim.fn.fnamemodify(file, ":h")
-		local git_root_tbl = vim.fn.systemlist({ "git", "-C", file_dir, "rev-parse", "--show-toplevel" })
-		local branch_tbl = vim.fn.systemlist({ "git", "-C", file_dir, "rev-parse", "--abbrev-ref", "HEAD" })
-		if vim.v.shell_error ~= 0 or #git_root_tbl == 0 or #branch_tbl == 0 then
-			vim.fn.system({ "tmux", "set-option", "-gq", "@nvim_git_info", "" })
-			return
-		end
-		local repo = vim.fn.fnamemodify(vim.fn.trim(git_root_tbl[1]), ":t")
-		local branch = vim.fn.trim(branch_tbl[1])
-		vim.fn.system({ "tmux", "set-option", "-gq", "@nvim_git_info", string.format(" %s:%s", repo, branch) })
-	end,
+  callback = function()
+    local file = vim.fn.expand("%:p")
+    if file == "" or vim.fn.filereadable(file) == 0 then
+      return
+    end
+    local file_dir = vim.fn.fnamemodify(file, ":h")
+    local git_root_tbl = vim.fn.systemlist({ "git", "-C", file_dir, "rev-parse", "--show-toplevel" })
+    local branch_tbl = vim.fn.systemlist({ "git", "-C", file_dir, "rev-parse", "--abbrev-ref", "HEAD" })
+    if vim.v.shell_error ~= 0 or #git_root_tbl == 0 or #branch_tbl == 0 then
+      vim.fn.system({ "tmux", "set-option", "-gq", "@nvim_git_info", "" })
+      return
+    end
+    local repo = vim.fn.fnamemodify(vim.fn.trim(git_root_tbl[1]), ":t")
+    local branch = vim.fn.trim(branch_tbl[1])
+    vim.fn.system({ "tmux", "set-option", "-gq", "@nvim_git_info", string.format(" %s:%s", repo, branch) })
+  end,
 })
 
 -- ─── RISCV ────────────────────────────────────────────────────────────────────
@@ -172,12 +173,12 @@ map("n", "<leader>r", ":silent !riscv64-elf-gcc -nostdlib -nostartfiles -o %:r.e
 -- ─── Cleanup conflicting LazyVim defaults ────────────────────────────────────
 vim.keymap.del("n", "<leader>xs")
 map("n", "<leader>?", function()
-	require("telescope.builtin").keymaps({
-		modes = { "n", "v", "x", "i", "o", "t" },
-	})
+  require("telescope.builtin").keymaps({
+    modes = { "n", "v", "x", "i", "o", "t" },
+  })
 end, { desc = "Search keymaps" })
 -- In your toggleterm config, add after opts:
 map("n", "<leader>mR", function()
-	local line = vim.api.nvim_get_current_line()
-	require("toggleterm").exec(line)
+  local line = vim.api.nvim_get_current_line()
+  require("toggleterm").exec(line)
 end, { desc = "Run MATLAB line in float" })
