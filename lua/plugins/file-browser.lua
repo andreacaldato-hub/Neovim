@@ -10,8 +10,10 @@ return {
 			extensions = {
 				file_browser = {
 					hidden = true,
-					previewer = true, -- enable built-in previewer (bat for files)
-					grouped = true, -- enable built-in previewer (bat for files)
+					previewer = true,
+					grouped = true,
+					respect_gitignore = false,
+					hide_parent_folder = false,
 					git_status = false,
 					git_icons = {
 						added = "A",
@@ -29,7 +31,11 @@ return {
 		telescope.load_extension("file_browser")
 
 		vim.keymap.set("n", "<leader>a", function()
-			local cwd = vim.fn.expand("%:p:h") -- get current file's directory
+			local path = vim.fn.expand("%:p")
+			if path == "" then
+				path = vim.fn.getcwd()
+			end
+			local cwd = vim.fn.fnamemodify(path, ":h")
 			telescope.extensions.file_browser.file_browser({
 				cwd = cwd,
 				layout_config = { horizontal = { preview_width = 0.5 } },
