@@ -6,3 +6,10 @@
 --
 -- Or remove existing autocmds by their group name (which is prefixed with `lazyvim_` for the defaults)
 -- e.g. vim.api.nvim_del_augroup_by_name("lazyvim_wrap_spell")
+
+-- Blink.cmp documentation window border color (VSCode-like)
+
+-- Pointer asterisk highlighting
+vim.api.nvim_set_hl(0, "@operator", { fg = "#F14C4C" })
+
+-- LSP Hover/Documentation window border
