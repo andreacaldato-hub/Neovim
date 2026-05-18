@@ -40,7 +40,7 @@ vim.opt.splitbelow = true
 vim.opt.splitright = true
 vim.opt.splitkeep = "cursor"
 vim.opt.mouse = ""
-vim.opt.cursorline = false
+vim.opt.cursorline = true
 
 -- Remove line background but keep number styling
 vim.opt.timeout = false
@@ -55,21 +55,21 @@ vim.g.vimtex_compiler_method = "latexmk"
 vim.g.vimtex_view_general_options = "--synctex-forward @line:@col:@tex --no-guess"
 
 vim.api.nvim_create_user_command("LatexBuild", function()
-	local tex_file = vim.fn.expand("%:p")
-	local pdf_file = tex_file:gsub("%.tex$", ".pdf")
+  local tex_file = vim.fn.expand("%:p")
+  local pdf_file = tex_file:gsub("%.tex$", ".pdf")
 
-	-- Compile the .tex file
-	vim.cmd("VimtexCompile")
+  -- Compile the .tex file
+  vim.cmd("VimtexCompile")
 
-	-- Open Zathura in a Kitty split
-	vim.fn.system("kitty --detach zathura " .. pdf_file)
+  -- Open Zathura in a Kitty split
+  vim.fn.system("kitty --detach zathura " .. pdf_file)
 end, {})
 -- Function to compile and open PDF in vertical split
 vim.api.nvim_create_autocmd("TextYankPost", {
-	callback = function()
-		vim.highlight.on_yank({
-			higroup = "IncSearch",
-			timeout = 200,
-		})
-	end,
+  callback = function()
+    vim.highlight.on_yank({
+      higroup = "IncSearch",
+      timeout = 200,
+    })
+  end,
 })

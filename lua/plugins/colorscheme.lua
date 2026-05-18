@@ -11,12 +11,16 @@ return {
       functions = { italic = true },
       variables = { italic = true },
     },
+    custom_highlights = function(highlights, palette)
+      highlights.Comment = { fg = palette.grey, italic = true, bold = true }
+      return highlights
+    end,
   },
   config = function(_, opts)
     require("tokyodark").setup(opts)
     vim.cmd([[colorscheme tokyodark]])
   end,
-} -- version = "v0.1.0", -- Pin to legacy version
+}
 -- priority = 1000,
 -- config = function()
 -- 	-- Lua
