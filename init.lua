@@ -17,7 +17,7 @@ local function set_blink_hl()
     nocombine = true, -- Importante: impedisce ad altri hl di combinarsi sopra
   })
 
-  vim.api.nvim_set_hl(0, "String", { fg = "#89b482", italic = true })
+  -- vim.api.nvim_set_hl(0, "String", { fg = "#89b482", italic = true })
   vim.api.nvim_set_hl(0, "Function", { fg = "#95C561", italic = true, bold = true })
   vim.api.nvim_set_hl(0, "BlinkCmpLabelMatchDescription", {
     fg = "NONE",
