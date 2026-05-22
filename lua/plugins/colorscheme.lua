@@ -1,24 +1,109 @@
+-- return {
+-- "tiagovla/tokyodark.nvim",
+-- priority = 1000,
+-- opts = {
+--   transparent_background = true,
+--   gamma = 1.0,
+--   styles = {
+--     comments = { italic = true },
+--     keywords = { italic = true },
+--     identifiers = { italic = true },
+--     functions = { italic = true },
+--     variables = { italic = true },
+--   },
+--   custom_highlights = function(highlights, palette)
+--     highlights.Comment = { fg = palette.grey, italic = true, bold = true }
+--     return highlights
+--   end,
+-- },
+-- config = function(_, opts)
+--   require("tokyodark").setup(opts)
+--   vim.cmd([[colorscheme tokyodark]])
+-- end,
 return {
-  "tiagovla/tokyodark.nvim",
+  "Shatur/neovim-ayu",
+  lazy = false,
   priority = 1000,
-  opts = {
-    transparent_background = true,
-    gamma = 1.0,
-    styles = {
-      comments = { italic = true },
-      keywords = { italic = true },
-      identifiers = { italic = true },
-      functions = { italic = true },
-      variables = { italic = true },
-    },
-    custom_highlights = function(highlights, palette)
-      highlights.Comment = { fg = palette.grey, italic = true, bold = true }
-      return highlights
-    end,
-  },
-  config = function(_, opts)
-    require("tokyodark").setup(opts)
-    vim.cmd([[colorscheme tokyodark]])
+  config = function()
+    local colors = require("ayu.colors")
+    colors.generate(false) -- false = dark, true = mirage
+
+    require("ayu").setup({
+      mirage = false,
+      terminal = true,
+      overrides = {
+        -- transparency
+        Normal                     = { bg = "None" },
+        NormalNC                   = { bg = "None" },
+        NormalFloat                = { bg = "None" },
+        FloatBorder                = { bg = "None" },
+        FloatTitle                 = { bg = "None" },
+        EndOfBuffer                = { bg = "None" },
+        MsgArea                    = { bg = "None" },
+        Pmenu                      = { bg = "None" },
+        PmenuSel                   = { bg = "None" },
+        PmenuSbar                  = { bg = "None" },
+        PmenuThumb                 = { bg = "None" },
+        CursorLine                 = { bg = "None" },
+        CursorColumn               = { bg = "None" },
+        ColorColumn                = { bg = "None" },
+        SignColumn                 = { bg = "None" },
+        Folded                     = { bg = "None" },
+        FoldColumn                 = { bg = "None" },
+        VertSplit                  = { bg = "None" },
+        WinSeparator               = { bg = "None" },
+        StatusLine                 = { bg = "None" },
+        StatusLineNC               = { bg = "None" },
+        TabLine                    = { bg = "None" },
+        TabLineFill                = { bg = "None" },
+        TabLineSel                 = { bg = "None" },
+        DiagnosticVirtualTextError = { bg = "None" },
+        DiagnosticVirtualTextWarn  = { bg = "None" },
+        DiagnosticVirtualTextInfo  = { bg = "None" },
+        DiagnosticVirtualTextHint  = { bg = "None" },
+        TelescopeNormal            = { bg = "None" },
+        TelescopeBorder            = { bg = "None" },
+        TelescopePromptNormal      = { bg = "None" },
+        TelescopePromptBorder      = { bg = "None" },
+        TelescopeResultsNormal     = { bg = "None" },
+        TelescopeResultsBorder     = { bg = "None" },
+        TelescopePreviewNormal     = { bg = "None" },
+        TelescopePreviewBorder     = { bg = "None" },
+        NvimTreeNormal             = { bg = "None" },
+        NvimTreeNormalNC           = { bg = "None" },
+        NvimTreeEndOfBuffer        = { bg = "None" },
+        NvimTreeWinSeparator       = { bg = "None" },
+        NeoTreeNormal              = { bg = "None" },
+        NeoTreeNormalNC            = { bg = "None" },
+        WhichKeyFloat              = { bg = "None" },
+        WhichKeyBorder             = { bg = "None" },
+
+        -- italic
+        Comment                    = { fg = colors.comment, italic = true },
+        ["@variable.parameter"]    = { fg = colors.fg, italic = true },
+        ["@type.builtin"]          = { fg = colors.keyword, italic = true },
+        ["@type"]                  = { fg = colors.entity, italic = true },
+        ["@keyword"]               = { fg = colors.keyword, italic = true },
+        ["@keyword.return"]        = { fg = colors.keyword, italic = true },
+        ["@keyword.function"]      = { fg = colors.keyword, italic = true },
+        ["@string"]                = { fg = colors.string, italic = true },
+        ["@property"]              = { fg = colors.tag, italic = true },
+
+        -- bold
+        ["@function"]              = { fg = colors.func, bold = true },
+        ["@function.builtin"]      = { fg = colors.func, bold = true },
+        ["@function.method"]       = { fg = colors.func, bold = true },
+        ["@constant"]              = { fg = colors.constant, bold = true },
+        ["@constant.builtin"]      = { fg = colors.constant, bold = true },
+        ["@namespace"]             = { fg = colors.entity, bold = true },
+        ["@constructor"]           = { fg = colors.entity, bold = true },
+
+        -- bold italic
+        ["@keyword.operator"]      = { fg = colors.operator, bold = true, italic = true },
+        ["@exception"]             = { fg = colors.keyword, bold = true, italic = true },
+      },
+    })
+    vim.cmd("colorscheme ayu")
   end,
 }
 -- priority = 1000,

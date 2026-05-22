@@ -29,3 +29,9 @@ vim.api.nvim_create_autocmd({ "VimEnter", "ColorScheme" }, { callback = set_blin
 -- This removes the background color from all floating windows
 vim.api.nvim_set_hl(0, "NormalFloat", { bg = "none" })
 vim.api.nvim_set_hl(0, "FloatBorder", { bg = "none" })
+vim.api.nvim_set_hl(0, "LineNr", { fg = "#4a5568", bg = "NONE" })
+vim.api.nvim_set_hl(0, "LineNrAbove", { fg = "#3a4556", bg = "NONE" })
+vim.api.nvim_set_hl(0, "LineNrBelow", { fg = "#3a4556", bg = "NONE" })
+vim.api.nvim_set_hl(0, "CursorLineNr", { fg = "#ffb454", bg = "NONE", bold = true })
+vim.api.nvim_set_hl(0, "CursorLine", { bg = "NONE" })
+vim.api.nvim_set_hl(0, "SignColumn", { bg = "NONE" })
