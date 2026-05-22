@@ -73,3 +73,5 @@ vim.api.nvim_create_autocmd("TextYankPost", {
     })
   end,
 })
+vim.api.nvim_set_hl(0, "IncSearch", { bg = "#ffb454", fg = "#0a0e14" })
+vim.opt.fillchars = { eob = " " }

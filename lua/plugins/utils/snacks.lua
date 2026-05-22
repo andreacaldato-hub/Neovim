@@ -30,7 +30,7 @@ return {
     words = { enabled = false },
     styles = {
       notification = {
-        --  = { wrap = true } -- Wrap notifications
+        { wrap = true } -- Wrap notifications
       },
     },
   },
