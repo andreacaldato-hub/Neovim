@@ -81,6 +81,7 @@ return {
         CInclude                                        = { fg = "#FE8E40" },
         CDefine                                         = { fg = "#FE8E40" },
         pythonFunction                                  = { fg = "#F9AF4F" },
+        ["@punctuation.bracket.c"]                      = { fg = "#FE8E40" },
         ["@type.builtin"]                               = { fg = "#37B1DB", italic = true },
         ["@variable"]                                   = { fg = "#BFBDB6", italic = true },
         ["@lsp.typemod.parameter.functionScope.c"]      = { fg = "#C89EF3", italic = true },
