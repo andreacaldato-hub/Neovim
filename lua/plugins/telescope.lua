@@ -47,7 +47,7 @@ return {
           bg = "NONE",
           bold = true,
         })
-        vim.api.nvim_set_hl(0, "TelescopeMatching", { fg = "#89b482", bold = false })
+        vim.api.nvim_set_hl(0, "TelescopeMatching", { fg = "#FE8E40", bold = false })
       end
 
       vim.api.nvim_create_autocmd({ "ColorScheme", "VimEnter" }, {
