@@ -11,5 +11,17 @@
 
 -- Pointer asterisk highlighting
 vim.api.nvim_set_hl(0, "@operator", { fg = "#F14C4C" })
+vim.api.nvim_create_autocmd("LspAttach", {
+  callback = function(event)
+    local client = vim.lsp.get_client_by_id(event.data.client_id)
 
+    -- disable semantic tokens only for lua files
+    if client.name == "lua_ls" then
+      client.server_capabilities.semanticTokensProvider = nil
+    end
+
+    local opts = { buffer = event.buf }
+    -- ... rest of your keymaps
+  end,
+})
 -- LSP Hover/Documentation window border

@@ -65,11 +65,13 @@ vim.api.nvim_create_user_command("LatexBuild", function()
   vim.fn.system("kitty --detach zathura " .. pdf_file)
 end, {})
 -- Function to compile and open PDF in vertical split
+-- in your highlights.lua, add a yank autocmd with high priority
 vim.api.nvim_create_autocmd("TextYankPost", {
   callback = function()
     vim.highlight.on_yank({
-      higroup = "IncSearch",
-      timeout = 200,
+      higroup = "Visual",   -- reuse your visual selection color
+      timeout = 150,
+      priority = 250,       -- higher than colorizer's default (100)
     })
   end,
 })

@@ -26,9 +26,9 @@ require("lazy").setup({
   spec = {
     -- import your plugins
     { import = "plugins" },
-    { import = "plugins.ui" },            -- everything inside "others" folder  },
+    { import = "plugins.lsp" },
+   { import = "plugins.ui" },            -- everything inside "others" folder  },
     { import = "plugins.utils" },         -- everything inside "others" folder  },
-    { import = "plugins.lsp" },           -- everything inside "others" folder  },
     { import = "plugins.git" },           -- everything inside "others" folder  },
     { import = "plugins.latex.plugins" }, -- everything inside "others" folder  },
     -- Configure any other settings here. See the documentation for more details.
