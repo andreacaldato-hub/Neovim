@@ -65,8 +65,8 @@ vim.lsp.config("luau_lsp", {
 	cmd = {
 		"luau-lsp",
 		"lsp",
-		"--definitions=" .. vim.fn.expand("~/.config/nvim/roblox/globalTypes.d.luau"),
-		"--docs=" .. vim.fn.expand("~/.config/nvim/roblox/en-us.json"),
+		"--definitions=" .. vim.fn.expand("~/.roblox/globalTypes.d.luau"),
+		"--docs=" .. vim.fn.expand("~/.roblox/en-us.json"),
 	},
 	filetypes = { "luau" },
 	root_dir = vim.fs.root(0, { ".git", ".luaurc", "default.project.json" }), -- default.project.json is the roblox project file
