@@ -21,90 +21,140 @@
 --   vim.cmd([[colorscheme tokyodark]])
 -- end,
 return {
-	"Shatur/neovim-ayu",
-	lazy = false,
-	priority = 1000,
+	-- "Shatur/neovim-ayu",
+	-- lazy = false,
+	-- priority = 1000,
+	-- config = function()
+	-- 	local colors = require("ayu.colors")
+	-- 	colors.generate(false) -- false = dark, true = mirage
+	-- 	require("ayu").setup({
+	-- 		mirage = false,
+	-- 		terminal = true,
+	-- 		overrides = {
+	-- 			-- transparency
+	-- 			Normal = { bg = "None" },
+	-- 			NormalNC = { bg = "None" },
+	-- 			NormalFloat = { bg = "None" },
+	-- 			FloatBorder = { bg = "None" },
+	-- 			FloatTitle = { bg = "None" },
+	-- 			EndOfBuffer = { bg = "None" },
+	-- 			MsgArea = { bg = "None" },
+	-- 			Pmenu = { bg = "None" },
+	-- 			PmenuSel = { bg = "None" },
+	-- 			PmenuSbar = { bg = "None" },
+	-- 			PmenuThumb = { bg = "None" },
+	-- 			CursorLine = { bg = "None" },
+	-- 			CursorColumn = { bg = "None" },
+	-- 			ColorColumn = { bg = "None" },
+	-- 			SignColumn = { bg = "None" },
+	-- 			Folded = { bg = "None" },
+	-- 			FoldColumn = { bg = "None" },
+	-- 			VertSplit = { bg = "None" },
+	-- 			WinSeparator = { bg = "None" },
+	-- 			StatusLine = { bg = "None" },
+	-- 			StatusLineNC = { bg = "None" },
+	-- 			TabLine = { bg = "None" },
+	-- 			TabLineFill = { bg = "None" },
+	-- 			TabLineSel = { bg = "None" },
+	-- 			DiagnosticVirtualTextError = { bg = "None" },
+	-- 			DiagnosticVirtualTextWarn = { bg = "None" },
+	-- 			DiagnosticVirtualTextInfo = { bg = "None" },
+	-- 			DiagnosticVirtualTextHint = { bg = "None" },
+	-- 			TelescopeNormal = { bg = "None" },
+	-- 			TelescopeBorder = { bg = "None" },
+	-- 			TelescopePromptNormal = { bg = "None" },
+	-- 			TelescopePromptBorder = { bg = "None" },
+	-- 			TelescopeResultsNormal = { bg = "None" },
+	-- 			TelescopeResultsBorder = { bg = "None" },
+	-- 			TelescopePreviewNormal = { bg = "None" },
+	-- 			TelescopePreviewBorder = { bg = "None" },
+	-- 			NvimTreeNormal = { bg = "None" },
+	-- 			NvimTreeNormalNC = { bg = "None" },
+	-- 			NvimTreeEndOfBuffer = { bg = "None" },
+	-- 			NvimTreeWinSeparator = { bg = "None" },
+	-- 			NeoTreeNormal = { bg = "None" },
+	-- 			NeoTreeNormalNC = { bg = "None" },
+	-- 			WhichKeyFloat = { bg = "None" },
+	-- 			WhichKeyBorder = { bg = "None" },
+	-- 			Comment = { fg = colors.comment, italic = true },
+	-- 			Constant = { fg = "#90E1C6" },
+	-- 			CInclude = { fg = "#FE8E40" },
+	-- 			CDefine = { fg = "#FE8E40" },
+	-- 			pythonFunction = { fg = "#F9AF4F" },
+	-- 			["@punctuation.bracket.c"] = { fg = "#FE8E40" },
+	-- 			["@type.builtin"] = { fg = "#37B1DB", italic = true },
+	-- 			["@variable"] = { fg = "#BFBDB6", italic = true },
+	-- 			["@punctuation.special.c"] = { fg = "#FFB454" },
+	-- 			["pythonInclude"] = { fg = "#FE8E40" },
+	-- 			["@function.builtin.lua"] = { fg = "#D95757" },
+	-- 			["@variable.member.lua"] = { fg = "#BFBDB6" },
+	-- 			["@variable.lua"] = { fg = "#37B1DB" },
+	-- 			["@property.lua"] = { fg = "#BFBDB6" },
+	-- 			["@number.lua"] = { fg = "#C89EF3" },
+	-- 			["@boolean.lua"] = { fg = "#C89EF3" },
+	-- 			["@function.call.lua"] = { fg = "#D95757" },
+	-- 			["@constant.macro.c"] = { fg = "#FFB454" },
+	-- 			["@number.c"] = { fg = "#C89EF3" },
+	-- 			["@variable.parameter.c"] = { fg = "#C89EF3" },
+	-- 			["@lsp.typemod.function.defaultLibrary.c"] = { fg = "#D95757" },
+	-- 			["@lsp.typemod.variable.readonly.luau"] = { fg = "#F29668", italic = true },
+	-- 			["@lsp.typemod.function.defaultLibrary.luau"] = { fg = "#D95757" },
+	-- 			luaConstant = { fg = "#C89EF3" },
+	-- 			luaNumber = { fg = "#C89EF3" },
+	-- 			["@lsp.type.enumMember.luau"] = { fg = "#BFBDB6" },
+	-- 		},
+	-- 	})
+	-- 	vim.cmd("colorscheme ayu")
+	-- end,
+	--{
+	"oskarnurm/koda.nvim",
+	lazy = false, -- make sure we load this during startup if it is your main colorscheme
+	priority = 1000, -- make sure to load this before all the other start plugins
 	config = function()
-		local colors = require("ayu.colors")
-		colors.generate(false) -- false = dark, true = mirage
-		require("ayu").setup({
-			mirage = false,
-			terminal = true,
-			overrides = {
-				-- transparency
-				Normal = { bg = "None" },
-				NormalNC = { bg = "None" },
-				NormalFloat = { bg = "None" },
-				FloatBorder = { bg = "None" },
-				FloatTitle = { bg = "None" },
-				EndOfBuffer = { bg = "None" },
-				MsgArea = { bg = "None" },
-				Pmenu = { bg = "None" },
-				PmenuSel = { bg = "None" },
-				PmenuSbar = { bg = "None" },
-				PmenuThumb = { bg = "None" },
-				CursorLine = { bg = "None" },
-				CursorColumn = { bg = "None" },
-				ColorColumn = { bg = "None" },
-				SignColumn = { bg = "None" },
-				Folded = { bg = "None" },
-				FoldColumn = { bg = "None" },
-				VertSplit = { bg = "None" },
-				WinSeparator = { bg = "None" },
-				StatusLine = { bg = "None" },
-				StatusLineNC = { bg = "None" },
-				TabLine = { bg = "None" },
-				TabLineFill = { bg = "None" },
-				TabLineSel = { bg = "None" },
-				DiagnosticVirtualTextError = { bg = "None" },
-				DiagnosticVirtualTextWarn = { bg = "None" },
-				DiagnosticVirtualTextInfo = { bg = "None" },
-				DiagnosticVirtualTextHint = { bg = "None" },
-				TelescopeNormal = { bg = "None" },
-				TelescopeBorder = { bg = "None" },
-				TelescopePromptNormal = { bg = "None" },
-				TelescopePromptBorder = { bg = "None" },
-				TelescopeResultsNormal = { bg = "None" },
-				TelescopeResultsBorder = { bg = "None" },
-				TelescopePreviewNormal = { bg = "None" },
-				TelescopePreviewBorder = { bg = "None" },
-				NvimTreeNormal = { bg = "None" },
-				NvimTreeNormalNC = { bg = "None" },
-				NvimTreeEndOfBuffer = { bg = "None" },
-				NvimTreeWinSeparator = { bg = "None" },
-				NeoTreeNormal = { bg = "None" },
-				NeoTreeNormalNC = { bg = "None" },
-				WhichKeyFloat = { bg = "None" },
-				WhichKeyBorder = { bg = "None" },
-				Comment = { fg = colors.comment, italic = true },
-				Constant = { fg = "#90E1C6" },
-				CInclude = { fg = "#FE8E40" },
-				CDefine = { fg = "#FE8E40" },
-				pythonFunction = { fg = "#F9AF4F" },
-				["@punctuation.bracket.c"] = { fg = "#FE8E40" },
-				["@type.builtin"] = { fg = "#37B1DB", italic = true },
-				["@variable"] = { fg = "#BFBDB6", italic = true },
-				["@punctuation.special.c"] = { fg = "#FFB454" },
-				["pythonInclude"] = { fg = "#FE8E40" },
-				["@function.builtin.lua"] = { fg = "#D95757" },
-				["@variable.member.lua"] = { fg = "#BFBDB6" },
-				["@variable.lua"] = { fg = "#37B1DB" },
-				["@property.lua"] = { fg = "#BFBDB6" },
-				["@number.lua"] = { fg = "#C89EF3" },
-				["@boolean.lua"] = { fg = "#C89EF3" },
-				["@function.call.lua"] = { fg = "#D95757" },
-				["@constant.macro.c"] = { fg = "#FFB454" },
-				["@number.c"] = { fg = "#C89EF3" },
-				["@variable.parameter.c"] = { fg = "#C89EF3" },
-				["@lsp.typemod.function.defaultLibrary.c"] = { fg = "#D95757" },
-				["@lsp.typemod.variable.readonly.luau"] = { fg = "#F29668", italic = true },
-				["@lsp.typemod.function.defaultLibrary.luau"] = { fg = "#D95757" },
-				luaConstant = { fg = "#C89EF3" },
-				luaNumber = { fg = "#C89EF3" },
-				["@lsp.type.enumMember.luau"] = { fg = "#BFBDB6" },
+		require("koda").setup({
+			transparent = true, -- enable for transparent backgrounds
+
+			-- Set the variants to use when auto-switching based on vim.o.background
+			-- Valid values: 'dark', 'light', 'moss', 'glade'
+			theme = {
+				dark = "dark",
+				light = "light",
 			},
+
+			-- Automatically enable highlights only for plugins installed by your plugin manager
+			-- Currently only supports `lazy.nvim`, `mini.deps` and `vim.pack`
+			auto = true, -- disable to load ALL available plugin highlights
+
+			cache = true, -- caches the theme for better performance
+
+			-- Style to be applied to different syntax groups
+			-- Common use case would be to set either `italic = true` or `bold = true` for a desired group
+			-- See `:help nvim_set_hl` for more valid values
+			styles = {
+				functions = { bold = true },
+				keywords = {},
+				comments = {},
+				strings = {},
+				constants = {}, -- includes numbers, booleans
+			},
+
+			-- Override colors for the active variant
+			-- Available keys (e.g., 'func') can be found in lua/koda/palette/
+			colors = {
+				-- func = "#4078F2",
+				-- keyword = "#A627A4",
+			},
+
+			-- You can modify or extend highlight groups using the `on_highlights` configuration option
+			-- Any changes made take effect when highlights are applied
+			on_highlights = function(hl, c)
+				-- hl.LineNr = { fg = c.info } -- change a specific highlight to use a different palette color
+				-- hl.Comment = { fg = c.emphasis, italic = true } -- modify a syntax group (add bold, italic, etc)
+				-- hl.RainbowDelimiterRed = { fg = "#fb2b2b" } -- add a custom highlight group for another plugin
+			end,
 		})
-		vim.cmd("colorscheme ayu")
+		-- require("koda").setup({ transparent = true })
+		vim.cmd("colorscheme koda")
 	end,
 }
 -- return {
