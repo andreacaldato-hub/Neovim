@@ -78,4 +78,10 @@ vim.lsp.config("luau_lsp", {
 		},
 	},
 })
-vim.lsp.enable({ "lua_ls", "pyright", "clangd", "luau_lsp", "bashls" })
+
+vim.lsp.config("texlab", {
+	cmd = { "texlab" },
+	filetypes = { "tex" },
+})
+
+vim.lsp.enable({ "lua_ls", "pyright", "clangd", "luau_lsp", "bashls", "texlab" })
