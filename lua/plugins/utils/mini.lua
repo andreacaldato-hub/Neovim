@@ -6,8 +6,8 @@ return {
 		event = "VeryLazy",
 		-- Disable LazyVim's default min.surround
 		opts = {
-			mappngs = {
-				add = "sa", -- sa{moton}{char}  e.g. saw)
+			mappings = {
+				add = "sa", -- sa{motion}{char} e.g. saiw)
 				delete = "sd", -- sd{char}          e.g. sd)
 				replace = "sr", -- sr{old}{new}       e.g. sr)"
 				highlight = "sh", -- sh{char}  highlight

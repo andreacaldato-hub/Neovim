@@ -1,3 +1,72 @@
+return {
+	{
+		"rebelot/kanagawa.nvim",
+		lazy = false,
+		priority = 1000,
+		opts = {
+			transparent = true,
+			theme = "wave",
+			background = {
+				dark = "wave",
+				light = "wave",
+			},
+			colors = {
+				theme = {
+					all = {
+						ui = {
+							-- Rimuove lo stacco di colore dalla UI laterale di Wave
+							bg_gutter = "none",
+						},
+					},
+				},
+			},
+			overrides = function(colors)
+				local theme = colors.theme
+				return {
+					-- Forzatura esplicita dei gruppi della SignColumn
+					SignColumn = { bg = "none" },
+					SignColumnSB = { bg = "none" },
+					LineNr = { bg = "none" },
+					CursorLineNr = { bg = "none" },
+					FoldColumn = { bg = "none" },
+					CursorLineSign = { bg = "none" },
+					MsgArea = { bg = "none" },
+
+					-- Rimuove lo sfondo solido dalle corrispondenze della ricerca
+					-- (mantiene solo il colore del testo e una leggera evidenziazione)
+					Search = { bg = theme.ui.bg_p1, fg = theme.ui.fg },
+					IncSearch = { bg = theme.ui.bg_p2, fg = theme.ui.fg_bright },
+					CurSearch = { bg = theme.ui.bg_p2, fg = theme.ui.fg_bright },
+					-- Rimuove lo sfondo blu/bluastro dalle informazioni sui parametri nel menu completamento
+					CmpItemMenu = { fg = theme.ui.fg_dim, bg = "none" },
+					CmpItemAbbrDeprecated = { fg = theme.ui.comment, bg = "none", strikethrough = true },
+					CmpItemAbbrMatch = { fg = theme.diag.warning, bg = "none", bold = true },
+					CmpItemAbbrMatchFuzzy = { fg = theme.diag.warning, bg = "none", bold = true },
+
+					-- Se usi Neovim 0.10+ o il completamento nativo:
+					PmenuExtra = { fg = theme.ui.fg_dim, bg = "none" },
+					PmenuExtraSel = { fg = theme.ui.fg, bg = theme.ui.bg_p2 },
+
+					-- FIX PER IL BORDO: colore ben visibile per la linea del bordo.
+					-- fg_border (#54546D) era troppo spento e spariva sullo sfondo
+					-- trasparente; uso ui.fg_dim per renderlo chiaramente visibile.
+					FloatBorder = { fg = theme.ui.fg_dim, bg = "none" },
+					FloatTitle = { fg = theme.ui.fg, bg = "none" },
+					NormalFloat = { bg = "none" },
+
+					-- Gruppi specifici per i popup LSP e i Diagnostic
+					LspInfoBorder = { fg = theme.ui.float.fg_border, bg = "none" },
+					DiagnosticFloatingError = { fg = theme.diag.error },
+					DiagnosticFloatingWarn = { fg = theme.diag.warning },
+				}
+			end,
+		},
+		config = function(_, opts)
+			require("kanagawa").setup(opts)
+			vim.cmd("colorscheme kanagawa")
+		end,
+	},
+}
 -- return {
 -- "tiagovla/tokyodark.nvim",
 -- priority = 1000,
@@ -237,104 +306,56 @@
 -- 		vim.cmd("colorscheme rose-pine")
 -- 	end,
 -- }
-return {
-	-- "oskarnurm/koda.nvim",
-	-- lazy = false, -- make sure we load this during startup if it is your main colorscheme
-	-- priority = 1000, -- make sure to load this before all the other start plugins
-	-- config = function()
-	-- 	require("koda").setup({
-	-- 		transparent = true, -- enable for transparent backgrounds
-	--
-	-- 		-- Set the variants to use when auto-switching based on vim.o.background
-	-- 		-- Valid values: 'dark', 'light', 'moss', 'glade'
-	-- 		theme = {
-	-- 			dark = "dark",
-	-- 			light = "light",
-	-- 		},
-	--
-	-- 		-- Automatically enable highlights only for plugins installed by your plugin manager
-	-- 		-- Currently only supports `lazy.nvim`, `mini.deps` and `vim.pack`
-	-- 		auto = true, -- disable to load ALL available plugin highlights
-	--
-	-- 		cache = true, -- caches the theme for better performance
-	--
-	-- 		-- Style to be applied to different syntax groups
-	-- 		-- Common use case would be to set either `italic = true` or `bold = true` for a desired group
-	-- 		-- See `:help nvim_set_hl` for more valid values
-	-- 		styles = {
-	-- 			functions = { fg = "#e5c07b" },
-	-- 			keywords = { fg = "#c397d8" },
-	-- 			comments = { fg = "#5c6370", italic = true },
-	-- 			strings = { fg = "#97c459" },
-	-- 			constants = { fg = "#d19a66" },
-	-- 		},
-	--
-	-- 		-- Override colors for the active variant
-	-- 		-- Available keys (e.g., 'func') can be found in lua/koda/palette/
-	-- 		colors = {
-	-- 			-- func = "#4078F2",
-	-- 			-- keyword = "#A627A4",
-	-- 		},
-	--
-	-- 		-- You can modify or extend highlight groups using the `on_highlights` configuration option
-	-- 		-- Any changes made take effect when highlights are applied
-	-- 		on_highlights = function(hl, c)
-	-- 			-- hl.LineNr = { fg = c.info } -- change a specific highlight to use a different palette color
-	-- 			-- hl.Comment = { fg = c.emphasis, italic = true } -- modify a syntax group (add bold, italic, etc)
-	-- 			-- hl.RainbowDelimiterRed = { fg = "#fb2b2b" } -- add a custom highlight group for another plugin
-	-- 		end,
-	-- 	})
-	-- 	-- require("koda").setup({ transparent = true })
-	-- 	vim.cmd("colorscheme koda")
-	-- end,
-	--{
-	{
-		"rebelot/kanagawa.nvim",
-		lazy = false,
-		priority = 1000,
-		opts = {
-			transparent = true,
-			theme = "wave",
-			background = {
-				dark = "wave",
-				light = "wave",
-			},
-			colors = {
-				theme = {
-					all = {
-						ui = {
-							-- Rimuove lo stacco di colore dalla UI laterale di Wave
-							bg_gutter = "none",
-						},
-					},
-				},
-			},
-			overrides = function(colors)
-				local theme = colors.theme
-				return {
-					-- Forzatura esplicita dei gruppi della SignColumn
-					SignColumn = { bg = "none" },
-					SignColumnSB = { bg = "none" },
-					LineNr = { bg = "none" },
-					CursorLineNr = { bg = "none" },
-					FoldColumn = { bg = "none" },
-					CursorLineSign = { bg = "none" },
-					MsgArea = { bg = "none" },
-
-					-- Rimuove lo sfondo solido dalle corrispondenze della ricerca
-					-- (mantiene solo il colore del testo e una leggera evidenziazione)
-					Search = { bg = theme.ui.bg_p1, fg = theme.ui.fg },
-					IncSearch = { bg = theme.ui.bg_p2, fg = theme.ui.fg_bright },
-					CurSearch = { bg = theme.ui.bg_p2, fg = theme.ui.fg_bright },
-				}
-			end,
-		},
-		config = function(_, opts)
-			require("kanagawa").setup(opts)
-			vim.cmd("colorscheme kanagawa")
-		end,
-	},
-}
+-- "oskarnurm/koda.nvim",
+-- lazy = false, -- make sure we load this during startup if it is your main colorscheme
+-- priority = 1000, -- make sure to load this before all the other start plugins
+-- config = function()
+-- 	require("koda").setup({
+-- 		transparent = true, -- enable for transparent backgrounds
+--
+-- 		-- Set the variants to use when auto-switching based on vim.o.background
+-- 		-- Valid values: 'dark', 'light', 'moss', 'glade'
+-- 		theme = {
+-- 			dark = "dark",
+-- 			light = "light",
+-- 		},
+--
+-- 		-- Automatically enable highlights only for plugins installed by your plugin manager
+-- 		-- Currently only supports `lazy.nvim`, `mini.deps` and `vim.pack`
+-- 		auto = true, -- disable to load ALL available plugin highlights
+--
+-- 		cache = true, -- caches the theme for better performance
+--
+-- 		-- Style to be applied to different syntax groups
+-- 		-- Common use case would be to set either `italic = true` or `bold = true` for a desired group
+-- 		-- See `:help nvim_set_hl` for more valid values
+-- 		styles = {
+-- 			functions = { fg = "#e5c07b" },
+-- 			keywords = { fg = "#c397d8" },
+-- 			comments = { fg = "#5c6370", italic = true },
+-- 			strings = { fg = "#97c459" },
+-- 			constants = { fg = "#d19a66" },
+-- 		},
+--
+-- 		-- Override colors for the active variant
+-- 		-- Available keys (e.g., 'func') can be found in lua/koda/palette/
+-- 		colors = {
+-- 			-- func = "#4078F2",
+-- 			-- keyword = "#A627A4",
+-- 		},
+--
+-- 		-- You can modify or extend highlight groups using the `on_highlights` configuration option
+-- 		-- Any changes made take effect when highlights are applied
+-- 		on_highlights = function(hl, c)
+-- 			-- hl.LineNr = { fg = c.info } -- change a specific highlight to use a different palette color
+-- 			-- hl.Comment = { fg = c.emphasis, italic = true } -- modify a syntax group (add bold, italic, etc)
+-- 			-- hl.RainbowDelimiterRed = { fg = "#fb2b2b" } -- add a custom highlight group for another plugin
+-- 		end,
+-- 	})
+-- 	-- require("koda").setup({ transparent = true })
+-- 	vim.cmd("colorscheme koda")
+-- end,
+--{
 -- return {
 -- 	"ellisonleao/gruvbox.nvim",
 -- 	priority = 1000,

@@ -1,27 +1,18 @@
--- Autocmds are automatically loaded on the VeryLazy event
--- Default autocmds that are always set: https://github.com/LazyVim/LazyVim/blob/main/lua/lazyvim/config/autocmds.lua
---
--- Add any additional autocmds here
--- with `vim.api.nvim_create_autocmd`
---
--- Or remove existing autocmds by their group name (which is prefixed with `lazyvim_` for the defaults)
--- e.g. vim.api.nvim_del_augroup_by_name("lazyvim_wrap_spell")
+-- ─── Autocmds & custom highlight groups ───────────────────────────────────────
+-- Default LazyVim autocmds are already set; this file adds extra ones.
+-- See: https://github.com/LazyVim/LazyVim/blob/main/lua/lazyvim/config/autocmds.lua
 
--- Blink.cmp documentation window border color (VSCode-like)
-
--- Pointer asterisk highlighting
+-- Highlight the @operator group with a distinct red
 vim.api.nvim_set_hl(0, "@operator", { fg = "#F14C4C" })
+
+-- Generic LspAttach handler: disable semantic tokens for the Lua LSP
 vim.api.nvim_create_autocmd("LspAttach", {
-  callback = function(event)
-    local client = vim.lsp.get_client_by_id(event.data.client_id)
+	callback = function(event)
+		local client = vim.lsp.get_client_by_id(event.data.client_id)
 
-    -- disable semantic tokens only for lua files
-    if client.name == "lua_ls" then
-      client.server_capabilities.semanticTokensProvider = nil
-    end
-
-    local opts = { buffer = event.buf }
-    -- ... rest of your keymaps
-  end,
+		-- The lua_ls semantic tokens clash with Treesitter highlights on Lua files
+		if client.name == "lua_ls" then
+			client.server_capabilities.semanticTokensProvider = nil
+		end
+	end,
 })
--- LSP Hover/Documentation window border

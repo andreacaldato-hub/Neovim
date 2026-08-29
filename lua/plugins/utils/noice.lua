@@ -15,6 +15,14 @@ return {
 	config = function()
 		require("noice").setup({
 			lsp = {
+				-- Noice di default intercetta l'hover di `K` e lo disegna come
+				-- finestre separate (titolo + contenuto + cornice), lasciando
+				-- il contenuto senza bordo visibile. Disattiviamo la gestione
+				-- di noice cosi' l'hover viene reso dall'handler nativo
+				-- (config.lsp) che crea una singola finestra col bordo rounded.
+				hover = {
+					enabled = false,
+				},
 				-- override markdown rendering so that **cmp** and other plugins use **Treesitter**
 				override = {
 					["vim.lsp.util.convert_input_to_markdown_lines"] = true,

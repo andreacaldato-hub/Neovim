@@ -1,10 +1,13 @@
+-- ─── Defaults ───────────────────────────────────────────────────────────────────
 -- Keymaps are automatically loaded on the VeryLazy event
 local opts = { noremap = true, silent = true }
 local map = vim.keymap.set
 
--- Disable space default
+-- Disable the default <Space> mapping
 map({ "n", "v" }, "<Space>", "<Nop>", { silent = true })
--- ─── Delete / Change (black hole register) ───────────────────────────────────
+
+-- ─── Delete / Change (black hole register) ──────────────────────────────────────
+-- Send deletes/changes to the black hole register so nothing lands in the #0 register
 map({ "n", "v" }, "d", '"_d')
 map({ "n", "v" }, "D", '"_D')
 map({ "n", "v" }, "c", '"_c')
@@ -12,7 +15,7 @@ map({ "n", "v" }, "C", '"_C')
 map({ "n", "v" }, "x", '"_x')
 map({ "n", "v" }, "X", '"_X')
 
--- ─── Paste ───────────────────────────────────────────────────────────────────
+-- ─── Paste ───────────────────────────────────────────────────────────────────────
 -- Normal mode: always paste from system clipboard
 -- map("n", "p", '"+p', opts)
 -- map("n", "P", '"+P', opts)
@@ -31,52 +34,53 @@ map("x", "p", function()
 	vim.api.nvim_put(lines, "l", false, true)
 end)
 
--- ─── Misc ─────────────────────────────────────────────────────────────────────
-map("n", "J", "mzJ`z")
-map("n", "Q", "<nop>")
+-- ─── Misc ───────────────────────────────────────────────────────────────────────
+map("n", "J", "mzJ`z") -- join line, keep cursor position
+map("n", "Q", "<nop>") -- disable Ex mode
 map("n", "<Esc>", "<cmd>noh<CR>")
-map("n", "n", "nzzzv", opts)
+map("n", "n", "nzzzv", opts) -- center search results
 map("n", "N", "Nzzzv", opts)
-map("n", "<C-d>", "<C-d>zz", opts)
+map("n", "<C-d>", "<C-d>zz", opts) -- center half-page jumps
 map("n", "<C-u>", "<C-u>zz", opts)
-map("n", "<C-s>", "<cmd>w<CR>", opts)
+map("n", "<C-s>", "<cmd>w<CR>", opts) -- save file
 
--- ─── Buffers ──────────────────────────────────────────────────────────────────
+-- ─── Buffers ────────────────────────────────────────────────────────────────────
 map("n", "<Tab>", ":bnext<CR>", opts)
 map("n", "<S-Tab>", ":bprevious<CR>", opts)
-map("n", "<leader>x", ":bd!<CR>", opts)
+map("n", "<leader>x", ":bd!<CR>", opts) -- close buffer (no prompt)
 
--- ─── Window management ────────────────────────────────────────────────────────
-map("n", "<leader>v", "<C-w>v", opts)
-map("n", "<leader>o", "<C-w>s", opts)
-map("n", "<leader>se", "<C-w>=", opts)
-map("n", "<leader>w", "<cmd>set wrap!<CR>", opts)
+-- ─── Window management ──────────────────────────────────────────────────────────
+map("n", "<leader>v", "<C-w>v", opts) -- vertical split
+map("n", "<leader>o", "<C-w>s", opts) -- horizontal split
+map("n", "<leader>se", "<C-w>=", opts) -- equalize windows
+map("n", "<leader>w", "<cmd>set wrap!<CR>", opts) -- toggle wrap
 
--- ─── Resize ───────────────────────────────────────────────────────────────────
+-- ─── Resize ─────────────────────────────────────────────────────────────────────
 map("n", "<Up>", ":resize +2<CR>", opts)
 map("n", "<Down>", ":resize -2<CR>", opts)
 map("n", "<Left>", ":vertical resize -2<CR>", opts)
 map("n", "<Right>", ":vertical resize +2<CR>", opts)
 
--- ─── Indenting (stay in visual mode) ─────────────────────────────────────────
+-- ─── Indenting (stay in visual mode) ────────────────────────────────────────────
 map("v", "<", "<gv", opts)
 map("v", ">", ">gv", opts)
 
--- ─── Move lines ───────────────────────────────────────────────────────────────
+-- ─── Move lines ─────────────────────────────────────────────────────────────────
 map("v", "J", ":m '>+1<CR>gv=gv")
 map("v", "K", ":m '<-2<CR>gv=gv")
 
--- ─── Tmux navigation ──────────────────────────────────────────────────────────
+-- ─── Tmux navigation ────────────────────────────────────────────────────────────
 vim.g.tmux_navigator_no_mappings = 1
 map("n", "<C-h>", ":TmuxNavigateLeft<CR>", { silent = true })
 map("n", "<C-j>", ":TmuxNavigateDown<CR>", { silent = true })
 map("n", "<C-k>", ":TmuxNavigateUp<CR>", { silent = true })
 map("n", "<C-l>", ":TmuxNavigateRight<CR>", { silent = true })
 
--- ─── Terminal ─────────────────────────────────────────────────────────────────
+-- ─── Terminal ───────────────────────────────────────────────────────────────────
 map("t", "<Esc>", [[<C-\><C-n>]], opts)
 map("t", "<leader>q", "<C-\\><C-n>:q<CR>", opts)
 
+-- Open a horizontal tmux split in the current file's directory
 function OpenTmuxSplit()
 	local file_path = vim.fn.expand("%:p:h")
 	local cmd = "tmux split-window -h -c " .. vim.fn.shellescape(file_path)
@@ -85,13 +89,14 @@ end
 
 map("n", "<leader>t", ":lua OpenTmuxSplit()<CR>", opts)
 
--- ─── Live server ──────────────────────────────────────────────────────────────
+-- ─── Live server ────────────────────────────────────────────────────────────────
 local live_servers = {}
 
 local function get_port_from_dir()
 	return 3000
 end
 
+-- Start a live server for the current directory
 map("n", "<leader>bs", function()
 	local dir = vim.fn.expand("%:p:h")
 	if live_servers[dir] then
@@ -111,6 +116,7 @@ map("n", "<leader>bs", function()
 	print("Live server started at http://localhost:" .. port)
 end, opts)
 
+-- Open the current file in Firefox via the running live server
 map("n", "<leader>b", function()
 	local file = vim.fn.expand("%:t")
 	local dir = vim.fn.expand("%:p:h")
@@ -122,6 +128,7 @@ map("n", "<leader>b", function()
 	vim.fn.jobstart({ "firefox", string.format("http://localhost:%d/%s", port, file) }, { detach = true })
 end, opts)
 
+-- Stop the live server for the current directory
 map("n", "<leader>bx", function()
 	local dir = vim.fn.expand("%:p:h")
 	local port = live_servers[dir]
@@ -137,7 +144,7 @@ map("n", "<leader>bx", function()
 	})
 end, opts)
 
--- ─── Auto reload live server on save ─────────────────────────────────────────
+-- ─── Auto reload live server on save ────────────────────────────────────────────
 vim.api.nvim_create_autocmd("BufWritePost", {
 	pattern = { "*.html", "*.css", "*.js" },
 	callback = function()
@@ -148,7 +155,7 @@ vim.api.nvim_create_autocmd("BufWritePost", {
 	end,
 })
 
--- ─── Git info in tmux ─────────────────────────────────────────────────────────
+-- ─── Git info in tmux ───────────────────────────────────────────────────────────
 vim.api.nvim_create_autocmd("BufEnter", {
 	callback = function()
 		local file = vim.fn.expand("%:p")
@@ -168,22 +175,25 @@ vim.api.nvim_create_autocmd("BufEnter", {
 	end,
 })
 
--- ─── RISCV ────────────────────────────────────────────────────────────────────
+-- ─── RISCV ──────────────────────────────────────────────────────────────────────
 map("n", "<leader>r", ":silent !riscv64-elf-gcc -nostdlib -nostartfiles -o %:r.elf % && qemu-riscv64 %:r.elf<CR>", opts)
 
--- ─── Cleanup conflicting LazyVim defaults ────────────────────────────────────
-vim.keymap.del("n", "<leader>xs")
+-- ─── Cleanup conflicting LazyVim defaults ──────────────────────────────────────
+-- Remove the LazyVim default split-to-the-right mapping, if it exists
+pcall(vim.keymap.del, "n", "<leader>xs")
 map("n", "<leader>?", function()
 	require("telescope.builtin").keymaps({
 		modes = { "n", "v", "x", "i", "o", "t" },
 	})
 end, { desc = "Search keymaps" })
--- In your toggleterm config, add after opts:
+
+-- Run the current MATLAB line in a floating toggleterm
 map("n", "<leader>mR", function()
 	local line = vim.api.nvim_get_current_line()
 	require("toggleterm").exec(line)
 end, { desc = "Run MATLAB line in float" })
 
+-- Compile and run the current C file with raylib
 map("n", "<leader>cC", function()
 	local file = vim.fn.expand("%")
 	local output = vim.fn.expand("%:r")
