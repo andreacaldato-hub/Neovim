@@ -18,7 +18,7 @@ return {
 		completion = {
 			list = {
 				selection = {
-					preselect = false, -- don't auto-select the first item
+					preselect = true, -- don't auto-select the first item
 					auto_insert = false, -- don't auto-insert until you explicitly select
 				},
 			},
@@ -52,12 +52,12 @@ return {
 	config = function(_, opts)
 		require("blink.cmp").setup(opts)
 
-		vim.api.nvim_set_hl(0, "BlinkCmpMenu", { bg = "NONE", fg = "#b0b0b0" }) -- menu background and text
+		vim.api.nvim_set_hl(0, "BlinkCmpMenu", { bg = "#09090a", fg = "#b0b0b0" }) -- menu background and text
 		vim.api.nvim_set_hl(0, "BlinkCmpMenuSelection", { bg = "#222222", fg = "NONE", bold = true }) -- selected item
 		vim.api.nvim_set_hl(0, "BlinkCmpMenuBorder", { fg = "#2a2a2a" }) -- menu border
 		vim.api.nvim_set_hl(0, "BlinkCmpLabel", { fg = "NONE", bg = "NONE" }) -- completion item text
 		vim.api.nvim_set_hl(0, "BlinkCmpLabelDescription", { fg = "#50585d", bg = "NONE" }) -- item description text
-		vim.api.nvim_set_hl(0, "BlinkCmpDoc", { fg = "#b0b0b0", bg = "NONE" }) -- docs window text
+		vim.api.nvim_set_hl(0, "BlinkCmpDoc", { fg = "#b0b0b0", bg = "#09090a" }) -- docs window text
 		vim.api.nvim_set_hl(0, "BlinkCmpDocBorder", { fg = "#2a2a2a" }) -- docs border
 		vim.api.nvim_set_hl(0, "CursorLine", { bg = "NONE" }) -- don't highlight cursor line globally
 		vim.api.nvim_set_hl(0, "BlinkCmpLabelMatch", { fg = "#CBA85E", bg = "NONE", bold = true, nocombine = true }) -- matched chars in label

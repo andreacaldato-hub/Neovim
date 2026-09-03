@@ -43,6 +43,7 @@ map("n", "N", "Nzzzv", opts)
 map("n", "<C-d>", "<C-d>zz", opts) -- center half-page jumps
 map("n", "<C-u>", "<C-u>zz", opts)
 map("n", "<C-s>", "<cmd>w<CR>", opts) -- save file
+map("n", "<C-q>", "<cmd>q!<CR>", opts) -- save file
 
 -- ─── Buffers ────────────────────────────────────────────────────────────────────
 map("n", "<Tab>", ":bnext<CR>", opts)

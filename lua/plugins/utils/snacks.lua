@@ -2,7 +2,8 @@
 vim.api.nvim_create_autocmd("LspAttach", {
 	callback = function(args)
 		local client = vim.lsp.get_client_by_id(args.data.client_id)
-		if client and client:supports_method("textDocument/inlayHint") then
+		-- jdtls reports invalid inlay hint columns; disable to avoid errors
+		if client and client:supports_method("textDocument/inlayHint") and client.name ~= "jdtls" then
 			vim.lsp.inlay_hint.enable(true, { bufnr = args.buf })
 		end
 	end,

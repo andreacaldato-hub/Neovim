@@ -43,6 +43,10 @@ return {
 					CmpItemAbbrMatch = { fg = theme.diag.warning, bg = "none", bold = true },
 					CmpItemAbbrMatchFuzzy = { fg = theme.diag.warning, bg = "none", bold = true },
 
+					-- Popup di completamento: trasparente
+					Pmenu = { fg = theme.ui.fg, bg = "none" },
+					PmenuSel = { fg = theme.ui.fg, bg = theme.ui.bg_p2 },
+
 					-- Se usi Neovim 0.10+ o il completamento nativo:
 					PmenuExtra = { fg = theme.ui.fg_dim, bg = "none" },
 					PmenuExtraSel = { fg = theme.ui.fg, bg = theme.ui.bg_p2 },

@@ -17,6 +17,7 @@ return {
 				"latex",
 				"bibtex",
 				"luau",
+			"java",
 			},
 			highlight = {
 				enable = true,

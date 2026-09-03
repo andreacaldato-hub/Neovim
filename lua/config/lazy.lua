@@ -34,6 +34,7 @@ require("lazy").setup({
 		-- Import plugin groups (each folder is loaded automatically)
 		{ import = "plugins" },
 		{ import = "plugins.lsp" },
+		{ import = "plugins.lsp.java" },
 		{ import = "plugins.ui" },   -- UI plugins (incline, indent, etc.)
 		{ import = "plugins.utils" }, -- Utility plugins (harpoon, snacks, etc.)
 		{ import = "plugins.git" },  -- Git plugins (neogit, gitsigns)
