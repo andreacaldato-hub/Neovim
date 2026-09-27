@@ -22,11 +22,11 @@ return {
 					local modified = vim.bo[props.buf].modified
 					local buffer = {
 						ft_icon and { " ", ft_icon, " ", guibg = ft_color, guifg = helpers.contrast_color(ft_color) }
-						or "",
+							or "",
 						" ",
-						{ filename, gui = modified and "italic" or nil, guifg = "#FFFFFF" },
+						{ filename, gui = modified and "italic" or nil, guifg = "#9f9d8b" },
 						" ",
-						guibg = "NONE",
+						guibg = "#181a20",
 					}
 					return buffer
 				end,

@@ -1,76 +1,174 @@
+-- return {
+-- 	"catppuccin/nvim",
+-- 	name = "catppuccin",
+-- 	lazy = false,
+-- 	priority = 1000,
+-- 	config = function()
+-- 		require("catppuccin").setup({
+-- 			flavour = "frappe", -- latte, frappe, macchiato, mocha
+-- 			background = { -- :h background
+-- 				light = "latte",
+-- 				dark = "macchiato",
+-- 			},
+-- 			transparent_background = true, -- disables setting the background color.
+-- 			float = {
+-- 				transparent = true, -- enable transparent floating windows
+-- 				solid = false, -- use solid styling for floating windows, see |winborder|
+-- 			},
+-- 			term_colors = false, -- sets terminal colors (e.g. `g:terminal_color_0`)
+-- 			dim_inactive = {
+-- 				enabled = false, -- dims the background color of inactive window
+-- 				shade = "dark",
+-- 				percentage = 0.15, -- percentage of the shade to apply to the inactive window
+-- 			},
+-- 			no_italic = false, -- Force no italic
+-- 			no_bold = false, -- Force no bold
+-- 			no_underline = false, -- Force no underline
+-- 			styles = { -- Handles the styles of general hi groups (see `:h highlight-args`):
+-- 				comments = { "italic" }, -- Change the style of comments
+-- 				conditionals = { "italic" },
+-- 				loops = {},
+-- 				functions = {},
+-- 				keywords = {},
+-- 				strings = {},
+-- 				variables = {},
+-- 				numbers = {},
+-- 				booleans = {},
+-- 				properties = {},
+-- 				types = {},
+-- 				operators = {},
+-- 			},
+-- 			lsp_styles = { -- Handles the style of specific lsp hl groups (see `:h lsp-highlight`).
+-- 				virtual_text = {
+-- 					errors = { "italic" },
+-- 					hints = { "italic" },
+-- 					warnings = { "italic" },
+-- 					information = { "italic" },
+-- 					ok = { "italic" },
+-- 				},
+-- 				underlines = {
+-- 					errors = { "underline" },
+-- 					hints = { "underline" },
+-- 					warnings = { "underline" },
+-- 					information = { "underline" },
+-- 					ok = { "underline" },
+-- 				},
+-- 				inlay_hints = {
+-- 					background = true,
+-- 				},
+-- 			},
+-- 			color_overrides = {},
+-- 			custom_highlights = {},
+-- 			auto_integrations = true,
+-- 			integrations = {
+-- 				cmp = false,
+-- 				gitsigns = true,
+-- 				nvimtree = true,
+-- 				notify = false,
+-- 				mini = {
+-- 					enabled = true,
+-- 					indentscope_color = "",
+-- 				},
+-- 			},
+-- 		})
+--
+-- 		-- Apply the colorscheme after setup completes
+-- 		vim.cmd.colorscheme("catppuccin")
+-- 	end,
+-- }
 return {
-	{
-		"rebelot/kanagawa.nvim",
-		lazy = false,
-		priority = 1000,
-		opts = {
-			transparent = true,
-			theme = "wave",
-			background = {
-				dark = "wave",
-				light = "wave",
-			},
-			colors = {
-				theme = {
-					all = {
-						ui = {
-							-- Rimuove lo stacco di colore dalla UI laterale di Wave
-							bg_gutter = "none",
-						},
-					},
+	"thesimonho/kanagawa-paper.nvim",
+	lazy = false,
+	priority = 1000,
+	config = function(_, opts)
+		require("kanagawa-paper").setup(opts)
+		vim.cmd.colorscheme("kanagawa-paper") -- Applica il tema
+	end,
+	opts = {
+		transparent = true,
+		overrides = function(colors)
+			return {
+				["@lsp.typemod.property.classScope.c"] = {
+					fg = "#dcd7ba", -- Use a palette color (or hex string "#7E9CD8")
+					bold = true, -- Optional formatting
 				},
-			},
-			overrides = function(colors)
-				local theme = colors.theme
-				return {
-					-- Forzatura esplicita dei gruppi della SignColumn
-					SignColumn = { bg = "none" },
-					SignColumnSB = { bg = "none" },
-					LineNr = { bg = "none" },
-					CursorLineNr = { bg = "none" },
-					FoldColumn = { bg = "none" },
-					CursorLineSign = { bg = "none" },
-					MsgArea = { bg = "none" },
-
-					-- Rimuove lo sfondo solido dalle corrispondenze della ricerca
-					-- (mantiene solo il colore del testo e una leggera evidenziazione)
-					Search = { bg = theme.ui.bg_p1, fg = theme.ui.fg },
-					IncSearch = { bg = theme.ui.bg_p2, fg = theme.ui.fg_bright },
-					CurSearch = { bg = theme.ui.bg_p2, fg = theme.ui.fg_bright },
-					-- Rimuove lo sfondo blu/bluastro dalle informazioni sui parametri nel menu completamento
-					CmpItemMenu = { fg = theme.ui.fg_dim, bg = "none" },
-					CmpItemAbbrDeprecated = { fg = theme.ui.comment, bg = "none", strikethrough = true },
-					CmpItemAbbrMatch = { fg = theme.diag.warning, bg = "none", bold = true },
-					CmpItemAbbrMatchFuzzy = { fg = theme.diag.warning, bg = "none", bold = true },
-
-					-- Popup di completamento: trasparente
-					Pmenu = { fg = theme.ui.fg, bg = "none" },
-					PmenuSel = { fg = theme.ui.fg, bg = theme.ui.bg_p2 },
-
-					-- Se usi Neovim 0.10+ o il completamento nativo:
-					PmenuExtra = { fg = theme.ui.fg_dim, bg = "none" },
-					PmenuExtraSel = { fg = theme.ui.fg, bg = theme.ui.bg_p2 },
-
-					-- FIX PER IL BORDO: colore ben visibile per la linea del bordo.
-					-- fg_border (#54546D) era troppo spento e spariva sullo sfondo
-					-- trasparente; uso ui.fg_dim per renderlo chiaramente visibile.
-					FloatBorder = { fg = theme.ui.fg_dim, bg = "none" },
-					FloatTitle = { fg = theme.ui.fg, bg = "none" },
-					NormalFloat = { bg = "none" },
-
-					-- Gruppi specifici per i popup LSP e i Diagnostic
-					LspInfoBorder = { fg = theme.ui.float.fg_border, bg = "none" },
-					DiagnosticFloatingError = { fg = theme.diag.error },
-					DiagnosticFloatingWarn = { fg = theme.diag.warning },
-				}
-			end,
-		},
-		config = function(_, opts)
-			require("kanagawa").setup(opts)
-			vim.cmd("colorscheme kanagawa")
+			}
 		end,
 	},
 }
+-- return {
+-- 	{
+-- 		"rebelot/kanagawa.nvim",
+-- 		lazy = false,
+-- 		priority = 1000,
+-- 		opts = {
+-- 			transparent = true,
+-- 			theme = "wave",
+-- 			background = {
+-- 				dark = "wave",
+-- 				light = "wave",
+-- 			},
+-- 			colors = {
+-- 				theme = {
+-- 					all = {
+-- 						ui = {
+-- 							-- Rimuove lo stacco di colore dalla UI laterale di Wave
+-- 							bg_gutter = "none",
+-- 						},
+-- 					},
+-- 				},
+-- 			},
+-- 			overrides = function(colors)
+-- 				local theme = colors.theme
+-- 				return {
+-- 					-- Forzatura esplicita dei gruppi della SignColumn
+-- 					SignColumn = { bg = "none" },
+-- 					SignColumnSB = { bg = "none" },
+-- 					LineNr = { bg = "none" },
+-- 					CursorLineNr = { bg = "none" },
+-- 					FoldColumn = { bg = "none" },
+-- 					CursorLineSign = { bg = "none" },
+-- 					MsgArea = { bg = "none" },
+--
+-- 					-- Rimuove lo sfondo solido dalle corrispondenze della ricerca
+-- 					-- (mantiene solo il colore del testo e una leggera evidenziazione)
+-- 					Search = { bg = theme.ui.bg_p1, fg = theme.ui.fg },
+-- 					IncSearch = { bg = theme.ui.bg_p2, fg = theme.ui.fg_bright },
+-- 					CurSearch = { bg = theme.ui.bg_p2, fg = theme.ui.fg_bright },
+-- 					-- Rimuove lo sfondo blu/bluastro dalle informazioni sui parametri nel menu completamento
+-- 					CmpItemMenu = { fg = theme.ui.fg_dim, bg = "none" },
+-- 					CmpItemAbbrDeprecated = { fg = theme.ui.comment, bg = "none", strikethrough = true },
+-- 					CmpItemAbbrMatch = { fg = theme.diag.warning, bg = "none", bold = true },
+-- 					CmpItemAbbrMatchFuzzy = { fg = theme.diag.warning, bg = "none", bold = true },
+--
+-- 					-- Popup di completamento: trasparente
+-- 					Pmenu = { fg = theme.ui.fg, bg = "none" },
+-- 					PmenuSel = { fg = theme.ui.fg, bg = theme.ui.bg_p2 },
+--
+-- 					-- Se usi Neovim 0.10+ o il completamento nativo:
+-- 					PmenuExtra = { fg = theme.ui.fg_dim, bg = "none" },
+-- 					PmenuExtraSel = { fg = theme.ui.fg, bg = theme.ui.bg_p2 },
+--
+-- 					-- FIX PER IL BORDO: colore ben visibile per la linea del bordo.
+-- 					-- fg_border (#54546D) era troppo spento e spariva sullo sfondo
+-- 					-- trasparente; uso ui.fg_dim per renderlo chiaramente visibile.
+-- 					FloatBorder = { fg = theme.ui.fg_dim, bg = "none" },
+-- 					FloatTitle = { fg = theme.ui.fg, bg = "none" },
+-- 					NormalFloat = { bg = "none" },
+--
+-- 					-- Gruppi specifici per i popup LSP e i Diagnostic
+-- 					LspInfoBorder = { fg = theme.ui.float.fg_border, bg = "none" },
+-- 					DiagnosticFloatingError = { fg = theme.diag.error },
+-- 					DiagnosticFloatingWarn = { fg = theme.diag.warning },
+-- 				}
+-- 			end,
+-- 		},
+-- 		config = function(_, opts)
+-- 			require("kanagawa").setup(opts)
+-- 			vim.cmd("colorscheme kanagawa")
+-- 		end,
+-- 	},
+-- }
 -- return {
 -- "tiagovla/tokyodark.nvim",
 -- priority = 1000,
@@ -310,55 +408,54 @@ return {
 -- 		vim.cmd("colorscheme rose-pine")
 -- 	end,
 -- }
--- "oskarnurm/koda.nvim",
--- lazy = false, -- make sure we load this during startup if it is your main colorscheme
--- priority = 1000, -- make sure to load this before all the other start plugins
--- config = function()
--- 	require("koda").setup({
--- 		transparent = true, -- enable for transparent backgrounds
+-- return {
+-- 	"oskarnurm/koda.nvim",
+-- 	lazy = false, -- Load immediately during startup
+-- 	priority = 1000, -- High priority so it loads before other UI plugins
+-- 	config = function()
+-- 		require("koda").setup({
+-- 			transparent = true, -- Enable transparent background
 --
--- 		-- Set the variants to use when auto-switching based on vim.o.background
--- 		-- Valid values: 'dark', 'light', 'moss', 'glade'
--- 		theme = {
--- 			dark = "dark",
--- 			light = "light",
--- 		},
+-- 			-- Variants to use when auto-switching based on vim.o.background
+-- 			-- Options: 'dark', 'light', 'moss', 'glade'
+-- 			theme = {
+-- 				dark = "dark",
+-- 				light = "light",
+-- 			},
 --
--- 		-- Automatically enable highlights only for plugins installed by your plugin manager
--- 		-- Currently only supports `lazy.nvim`, `mini.deps` and `vim.pack`
--- 		auto = true, -- disable to load ALL available plugin highlights
+-- 			-- Highlight support for plugins installed by your manager (lazy.nvim, mini.deps, vim.pack)
+-- 			auto = true,
 --
--- 		cache = true, -- caches the theme for better performance
+-- 			-- Cache the theme for performance
+-- 			cache = true,
 --
--- 		-- Style to be applied to different syntax groups
--- 		-- Common use case would be to set either `italic = true` or `bold = true` for a desired group
--- 		-- See `:help nvim_set_hl` for more valid values
--- 		styles = {
--- 			functions = { fg = "#e5c07b" },
--- 			keywords = { fg = "#c397d8" },
--- 			comments = { fg = "#5c6370", italic = true },
--- 			strings = { fg = "#97c459" },
--- 			constants = { fg = "#d19a66" },
--- 		},
+-- 			-- Syntax group style overrides
+-- 			styles = {
+-- 				functions = { fg = "#e5c07b" },
+-- 				keywords = { fg = "#c397d8" },
+-- 				comments = { fg = "#5c6370", italic = true },
+-- 				strings = { fg = "#97c459" },
+-- 				constants = { fg = "#d19a66" },
+-- 			},
 --
--- 		-- Override colors for the active variant
--- 		-- Available keys (e.g., 'func') can be found in lua/koda/palette/
--- 		colors = {
--- 			-- func = "#4078F2",
--- 			-- keyword = "#A627A4",
--- 		},
+-- 			-- Override palette colors for the active variant
+-- 			colors = {
+-- 				-- func = "#4078F2",
+-- 				-- keyword = "#A627A4",
+-- 			},
 --
--- 		-- You can modify or extend highlight groups using the `on_highlights` configuration option
--- 		-- Any changes made take effect when highlights are applied
--- 		on_highlights = function(hl, c)
--- 			-- hl.LineNr = { fg = c.info } -- change a specific highlight to use a different palette color
--- 			-- hl.Comment = { fg = c.emphasis, italic = true } -- modify a syntax group (add bold, italic, etc)
--- 			-- hl.RainbowDelimiterRed = { fg = "#fb2b2b" } -- add a custom highlight group for another plugin
--- 		end,
--- 	})
--- 	-- require("koda").setup({ transparent = true })
--- 	vim.cmd("colorscheme koda")
--- end,
+-- 			-- Custom highlight overrides or extensions
+-- 			on_highlights = function(hl, c)
+-- 				-- hl.LineNr = { fg = c.info }
+-- 				-- hl.Comment = { fg = c.emphasis, italic = true }
+-- 				-- hl.RainbowDelimiterRed = { fg = "#fb2b2b" }
+-- 			end,
+-- 		})
+--
+-- 		-- Set colorscheme after setup
+-- 		vim.cmd.colorscheme("koda")
+-- 	end,
+-- }
 --{
 -- return {
 -- 	"ellisonleao/gruvbox.nvim",

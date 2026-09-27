@@ -35,10 +35,10 @@ return {
 			telescope.load_extension("fzf")
 
 			local function set_telescope_hl()
-				vim.api.nvim_set_hl(0, "TelescopeNormal", { fg = "#E0E2EA", bg = "#09090a" })
+				vim.api.nvim_set_hl(0, "TelescopeNormal", { fg = "#d4d0b5", bg = "NONE" })
 				vim.api.nvim_set_hl(0, "TelescopeBorder", { fg = "#3D3D3D" })
 				vim.api.nvim_set_hl(0, "TelescopeResultsLine", { bold = true })
-				vim.api.nvim_set_hl(0, "TelescopeSelection", { bg = "#3D3D3D", fg = "NONE", bold = true })
+				vim.api.nvim_set_hl(0, "TelescopeSelection", { bg = "#2a2a37", fg = "NONE", bold = true })
 				vim.api.nvim_set_hl(0, "TelescopePromptBorder", { fg = "#3D3D3D" })
 				vim.api.nvim_set_hl(0, "TelescopeResultsBorder", { fg = "#3D3D3D" })
 				vim.api.nvim_set_hl(0, "TelescopePreviewBorder", { fg = "#3D3D3D" })
