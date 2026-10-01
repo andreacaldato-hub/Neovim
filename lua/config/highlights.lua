@@ -29,6 +29,10 @@ vim.api.nvim_create_autocmd("ColorScheme", {
 		-- Visual selection
 		vim.api.nvim_set_hl(0, "Visual", { bg = "#2a2a2a", fg = "NONE" })
 		vim.api.nvim_set_hl(0, "IncSearch", { bg = "#CBA85E", fg = "#0a0e14" })
+
+		-- LspInlayHint
+		vim.api.nvim_set_hl(0, "LspInlayHint", { bg = "NONE" })
+		vim.api.nvim_set_hl(0, "LspInlayHint", { link = "Whitespace", bg = "NONE" })
 	end,
 })
 

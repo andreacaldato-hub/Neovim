@@ -3,12 +3,8 @@ return {
 	lazy = false,
 
 	init = function()
-		-- Viewer
+		-- Viewer (Zathura gestisce già nativamente Synctex con VimTeX)
 		vim.g.vimtex_view_method = "zathura"
-
-		-- Enable forward/inverse search
-		vim.g.vimtex_view_general_viewer = "zathura"
-		vim.g.vimtex_view_general_options = "--synctex-forward @line:@col:@tex @pdf"
 
 		-- Compiler
 		vim.g.vimtex_compiler_method = "latexmk"
@@ -18,7 +14,7 @@ return {
 			continuous = 1,
 			executable = "latexmk",
 			options = {
-				"-pdf",
+				"-lualatex", -- <--- Sostituito -pdf con -lualatex per supportare fontspec
 				"-shell-escape",
 				"-interaction=nonstopmode",
 				"-synctex=1",
@@ -36,9 +32,6 @@ return {
 
 		-- Folding
 		vim.g.vimtex_fold_enabled = 0
-
-		-- Disable VimTeX default mappings if you use your own
-		-- vim.g.vimtex_mappings_enabled = 0
 
 		-- Completion (let blink/LSP handle it)
 		vim.g.vimtex_complete_enabled = 0
