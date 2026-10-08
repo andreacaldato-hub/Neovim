@@ -16,3 +16,38 @@ vim.api.nvim_create_autocmd("LspAttach", {
 		end
 	end,
 })
+
+vim.api.nvim_create_autocmd("BufNewFile", {
+	pattern = "*.java",
+	callback = function()
+		local filepath = vim.fn.expand("%:p:h")
+
+		-- 1. Estrae il percorso partendo da src/main/java/ oppure semplicemente da src/
+		local package_path = filepath:match("src/main/java/(.+)") or filepath:match("src/(.+)")
+
+		if package_path then
+			-- 2. Converte le slash (/) nei punti (.) convenzionali di Java
+			local package_name = package_path:gsub("/", ".")
+			local class_name = vim.fn.expand("%:t:r")
+
+			-- 3. Scrive l'intestazione del file nel nuovo buffer
+			vim.api.nvim_buf_set_lines(0, 0, 0, false, {
+				"package " .. package_name .. ";",
+				"",
+				"public class " .. class_name .. " {",
+				"    ",
+				"}",
+			})
+
+			-- 4. Posiziona il cursore all'interno della classe
+			vim.api.nvim_win_set_cursor(0, { 4, 4 })
+		end
+	end,
+})
+
+vim.api.nvim_create_autocmd({ "VimEnter", "DirChanged" }, {
+	pattern = "*",
+	callback = function()
+		vim.fn.system({ "tmux", "chdir", vim.fn.getcwd() })
+	end,
+})

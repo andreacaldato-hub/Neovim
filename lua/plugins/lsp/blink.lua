@@ -60,7 +60,7 @@ return {
 		vim.api.nvim_set_hl(0, "BlinkCmpDoc", { fg = "#b0b0b0", bg = "NONE" }) -- docs window text
 		vim.api.nvim_set_hl(0, "BlinkCmpDocBorder", { fg = "#2a2a2a" }) -- docs border
 		vim.api.nvim_set_hl(0, "CursorLine", { bg = "NONE" }) -- don't highlight cursor line globally
-		vim.api.nvim_set_hl(0, "BlinkCmpLabelMatch", { fg = "#CBA85E", bg = "NONE", bold = true, nocombine = true }) -- matched chars in label
+		vim.api.nvim_set_hl(0, "BlinkCmpLabelMatch", { fg = "#e5c07b", bg = "NONE", bold = true, nocombine = true }) -- matched chars in label
 		vim.api.nvim_set_hl(0, "BlinkCmpLabelMatchDescription", { fg = "NONE", bg = "NONE", bold = false }) -- matched chars in description
 	end,
 }

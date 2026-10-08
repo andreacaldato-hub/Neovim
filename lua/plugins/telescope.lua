@@ -35,7 +35,7 @@ return {
 			telescope.load_extension("fzf")
 
 			local function set_telescope_hl()
-				vim.api.nvim_set_hl(0, "TelescopeNormal", { fg = "#d4d0b5", bg = "NONE" })
+				vim.api.nvim_set_hl(0, "TelescopeNormal", { fg = "#abb2bf", bg = "NONE" })
 				vim.api.nvim_set_hl(0, "TelescopeBorder", { fg = "#3D3D3D" })
 				vim.api.nvim_set_hl(0, "TelescopeResultsLine", { bold = true })
 				vim.api.nvim_set_hl(0, "TelescopeSelection", { bg = "#2a2a37", fg = "NONE", bold = true })
@@ -47,7 +47,7 @@ return {
 					bg = "NONE",
 					bold = true,
 				})
-				vim.api.nvim_set_hl(0, "TelescopeMatching", { fg = "#CBA85E", bold = false })
+				vim.api.nvim_set_hl(0, "TelescopeMatching", { fg = "#e5c07b", bold = false })
 			end
 
 			vim.api.nvim_create_autocmd({ "ColorScheme", "VimEnter" }, {

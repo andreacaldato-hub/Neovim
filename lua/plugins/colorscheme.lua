@@ -1,635 +1,178 @@
--- return {
--- 	"catppuccin/nvim",
--- 	name = "catppuccin",
--- 	lazy = false,
--- 	priority = 1000,
--- 	config = function()
--- 		require("catppuccin").setup({
--- 			flavour = "frappe", -- latte, frappe, macchiato, mocha
--- 			background = { -- :h background
--- 				light = "latte",
--- 				dark = "macchiato",
--- 			},
--- 			transparent_background = true, -- disables setting the background color.
--- 			float = {
--- 				transparent = true, -- enable transparent floating windows
--- 				solid = false, -- use solid styling for floating windows, see |winborder|
--- 			},
--- 			term_colors = false, -- sets terminal colors (e.g. `g:terminal_color_0`)
--- 			dim_inactive = {
--- 				enabled = false, -- dims the background color of inactive window
--- 				shade = "dark",
--- 				percentage = 0.15, -- percentage of the shade to apply to the inactive window
--- 			},
--- 			no_italic = false, -- Force no italic
--- 			no_bold = false, -- Force no bold
--- 			no_underline = false, -- Force no underline
--- 			styles = { -- Handles the styles of general hi groups (see `:h highlight-args`):
--- 				comments = { "italic" }, -- Change the style of comments
--- 				conditionals = { "italic" },
--- 				loops = {},
--- 				functions = {},
--- 				keywords = {},
--- 				strings = {},
--- 				variables = {},
--- 				numbers = {},
--- 				booleans = {},
--- 				properties = {},
--- 				types = {},
--- 				operators = {},
--- 			},
--- 			lsp_styles = { -- Handles the style of specific lsp hl groups (see `:h lsp-highlight`).
--- 				virtual_text = {
--- 					errors = { "italic" },
--- 					hints = { "italic" },
--- 					warnings = { "italic" },
--- 					information = { "italic" },
--- 					ok = { "italic" },
--- 				},
--- 				underlines = {
--- 					errors = { "underline" },
--- 					hints = { "underline" },
--- 					warnings = { "underline" },
--- 					information = { "underline" },
--- 					ok = { "underline" },
--- 				},
--- 				inlay_hints = {
--- 					background = true,
--- 				},
--- 			},
--- 			color_overrides = {},
--- 			custom_highlights = {},
--- 			auto_integrations = true,
--- 			integrations = {
--- 				cmp = false,
--- 				gitsigns = true,
--- 				nvimtree = true,
--- 				notify = false,
--- 				mini = {
--- 					enabled = true,
--- 					indentscope_color = "",
--- 				},
--- 			},
--- 		})
---
--- 		-- Apply the colorscheme after setup completes
--- 		vim.cmd.colorscheme("catppuccin")
--- 	end,
--- }
+-- lua/plugins/onedarkpro.lua
+-- OneDark Pro colorscheme for lazy.nvim
+-- Repo: https://github.com/olimorris/onedarkpro.nvim
+-- Themes: onedark | onelight | onedark_vivid | onedark_dark
+
 return {
-	"thesimonho/kanagawa-paper.nvim",
-	lazy = false,
-	priority = 1000,
-	config = function(_, opts)
-		require("kanagawa-paper").setup(opts)
-		vim.cmd.colorscheme("kanagawa-paper") -- Applica il tema
-	end,
-	opts = {
-		transparent = true,
-		overrides = function(colors)
-			return {
-				["@lsp.typemod.property.classScope.c"] = {
-					fg = "#dcd7ba", -- Use a palette color (or hex string "#7E9CD8")
-					bold = true, -- Optional formatting
+	"olimorris/onedarkpro.nvim",
+	lazy = false, -- load at startup (colorschemes should not be lazy loaded)
+	priority = 1000, -- load before every other plugin
+
+	config = function()
+		local helpers = require("onedarkpro.helpers")
+
+		require("onedarkpro").setup({
+
+			---------------------------------------------------------------------
+			-- COLORS
+			-- Override palette colors per theme, or for all themes at the top level.
+			-- Values can be hex strings or helper results.
+			---------------------------------------------------------------------
+			colors = {
+				-- applies to every theme
+				-- red = "#ff5555",
+
+				-- theme-specific overrides
+				onedark = {
+					-- bg = "#1e222a",
+					-- fg = "#c8ccd4",
+					-- cursorline = "#2c313c",
+					-- red = "#e06c75",
+					-- orange = "#d19a66",
+					-- yellow = "#e5c07b",
+					-- green = "#98c379",
+					-- cyan = "#56b6c2",
+					-- blue = "#61afef",
+					-- purple = "#c678dd",
+					-- gray = "#5c6370",
+					-- comment = "#7f848e",
 				},
-			}
-		end,
-	},
+				onelight = {},
+				onedark_vivid = {},
+				onedark_dark = {},
+
+				-- Derive colors from existing ones with helpers:
+				--   helpers.darken("bg", 5, "onedark")
+				--   helpers.lighten("bg", 5, "onedark")
+				--   helpers.brighten("red", 10)
+				-- Example:
+				-- onedark = {
+				--   cursorline = helpers.lighten("bg", 3, "onedark"),
+				-- },
+			},
+
+			---------------------------------------------------------------------
+			-- HIGHLIGHTS
+			-- Override or add highlight groups. You can reference palette colors
+			-- with "${name}" (e.g. "${red}", "${bg}", "${cursorline}").
+			-- Existing groups are merged with what you provide.
+			---------------------------------------------------------------------
+			highlights = {
+				-- Core
+				-- Comment = { fg = "${gray}", italic = true },
+				-- CursorLine = { bg = "${cursorline}" },
+				-- CursorLineNr = { fg = "${yellow}", bold = true },
+				-- LineNr = { fg = "${gray}" },
+				-- Visual = { bg = "${selection}" },
+				-- Normal = { bg = "NONE" },
+				-- NormalFloat = { bg = "${bg}" },
+				-- FloatBorder = { fg = "${blue}", bg = "${bg}" },
+				-- WinSeparator = { fg = "${gray}" },
+
+				-- Treesitter groups
+				-- ["@keyword"] = { fg = "${purple}", italic = true },
+				-- ["@function"] = { fg = "${blue}", bold = true },
+				-- ["@string"] = { fg = "${green}" },
+				-- ["@variable.parameter"] = { fg = "${orange}", italic = true },
+
+				-- LSP semantic tokens
+				-- ["@lsp.type.variable"] = { fg = "${fg}" },
+				-- ["@lsp.typemod.function.declaration"] = { bold = true },
+
+				-- Link one group to another
+				-- MyGroup = { link = "Comment" },
+			},
+
+			---------------------------------------------------------------------
+			-- STYLES
+			-- Combine with commas: "bold,italic", "underline", "NONE"
+			---------------------------------------------------------------------
+			styles = {
+				types = "NONE",
+				methods = "NONE",
+				numbers = "NONE",
+				strings = "NONE",
+				comments = "italic",
+				keywords = "bold,italic",
+				constants = "NONE",
+				functions = "italic",
+				operators = "NONE",
+				variables = "NONE",
+				parameters = "NONE",
+				conditionals = "italic",
+				virtual_text = "NONE",
+			},
+
+			---------------------------------------------------------------------
+			-- FILETYPES
+			-- Choose which filetype-specific highlight groups are loaded.
+			-- `all = true` loads everything; set individual ones to false to skip.
+			---------------------------------------------------------------------
+			filetypes = {
+				all = true,
+				-- markdown = true,
+				-- python = true,
+				-- lua = true,
+				-- javascript = true,
+				-- typescript = true,
+				html = false,
+				-- php = true,
+				-- ruby = true,
+				-- rust = false,
+				-- vue = false,
+			},
+
+			---------------------------------------------------------------------
+			-- PLUGINS
+			-- Choose which plugin highlight groups are loaded.
+			---------------------------------------------------------------------
+			plugins = {
+				all = true,
+				-- aerial = true,
+				-- barbar = true,
+				-- blink_cmp = true,
+				-- copilot = true,
+				-- dashboard = true,
+				-- gitsigns = true,
+				-- indentline = true,
+				-- lazy = true,
+				-- lsp_saga = true,
+				-- lsp_semantic_tokens = true,
+				-- mason = true,
+				-- neo_tree = true,
+				-- nvim_cmp = true,
+				-- nvim_tree = true,
+				-- telescope = true,
+				-- toggleterm = true,
+				-- treesitter = true,
+				-- trouble = true,
+				-- which_key = true,
+			},
+
+			---------------------------------------------------------------------
+			-- OPTIONS
+			---------------------------------------------------------------------
+			options = {
+				cursorline = true, -- use cursorline highlighting
+				transparency = true, -- transparent background
+				terminal_colors = true, -- set terminal colors (:terminal)
+				lualine_transparency = false, -- transparent lualine center section
+				highlight_inactive_windows = false, -- dim inactive windows
+			},
+		})
+
+		-----------------------------------------------------------------------
+		-- Apply the colorscheme
+		-----------------------------------------------------------------------
+		-- Pick one:
+		vim.cmd("colorscheme onedark")
+		-- vim.cmd("colorscheme onedark_vivid")
+		-- vim.cmd("colorscheme onedark_dark")
+		-- vim.cmd("colorscheme onelight")
+
+		-- Or follow vim.o.background automatically:
+		--   vim.o.background = "dark"   -- -> onedark
+		--   vim.o.background = "light"  -- -> onelight
+		-- (set one of the above BEFORE calling `colorscheme`)
+	end,
 }
--- return {
--- 	{
--- 		"rebelot/kanagawa.nvim",
--- 		lazy = false,
--- 		priority = 1000,
--- 		opts = {
--- 			transparent = true,
--- 			theme = "wave",
--- 			background = {
--- 				dark = "wave",
--- 				light = "wave",
--- 			},
--- 			colors = {
--- 				theme = {
--- 					all = {
--- 						ui = {
--- 							-- Rimuove lo stacco di colore dalla UI laterale di Wave
--- 							bg_gutter = "none",
--- 						},
--- 					},
--- 				},
--- 			},
--- 			overrides = function(colors)
--- 				local theme = colors.theme
--- 				return {
--- 					-- Forzatura esplicita dei gruppi della SignColumn
--- 					SignColumn = { bg = "none" },
--- 					SignColumnSB = { bg = "none" },
--- 					LineNr = { bg = "none" },
--- 					CursorLineNr = { bg = "none" },
--- 					FoldColumn = { bg = "none" },
--- 					CursorLineSign = { bg = "none" },
--- 					MsgArea = { bg = "none" },
---
--- 					-- Rimuove lo sfondo solido dalle corrispondenze della ricerca
--- 					-- (mantiene solo il colore del testo e una leggera evidenziazione)
--- 					Search = { bg = theme.ui.bg_p1, fg = theme.ui.fg },
--- 					IncSearch = { bg = theme.ui.bg_p2, fg = theme.ui.fg_bright },
--- 					CurSearch = { bg = theme.ui.bg_p2, fg = theme.ui.fg_bright },
--- 					-- Rimuove lo sfondo blu/bluastro dalle informazioni sui parametri nel menu completamento
--- 					CmpItemMenu = { fg = theme.ui.fg_dim, bg = "none" },
--- 					CmpItemAbbrDeprecated = { fg = theme.ui.comment, bg = "none", strikethrough = true },
--- 					CmpItemAbbrMatch = { fg = theme.diag.warning, bg = "none", bold = true },
--- 					CmpItemAbbrMatchFuzzy = { fg = theme.diag.warning, bg = "none", bold = true },
---
--- 					-- Popup di completamento: trasparente
--- 					Pmenu = { fg = theme.ui.fg, bg = "none" },
--- 					PmenuSel = { fg = theme.ui.fg, bg = theme.ui.bg_p2 },
---
--- 					-- Se usi Neovim 0.10+ o il completamento nativo:
--- 					PmenuExtra = { fg = theme.ui.fg_dim, bg = "none" },
--- 					PmenuExtraSel = { fg = theme.ui.fg, bg = theme.ui.bg_p2 },
---
--- 					-- FIX PER IL BORDO: colore ben visibile per la linea del bordo.
--- 					-- fg_border (#54546D) era troppo spento e spariva sullo sfondo
--- 					-- trasparente; uso ui.fg_dim per renderlo chiaramente visibile.
--- 					FloatBorder = { fg = theme.ui.fg_dim, bg = "none" },
--- 					FloatTitle = { fg = theme.ui.fg, bg = "none" },
--- 					NormalFloat = { bg = "none" },
---
--- 					-- Gruppi specifici per i popup LSP e i Diagnostic
--- 					LspInfoBorder = { fg = theme.ui.float.fg_border, bg = "none" },
--- 					DiagnosticFloatingError = { fg = theme.diag.error },
--- 					DiagnosticFloatingWarn = { fg = theme.diag.warning },
--- 				}
--- 			end,
--- 		},
--- 		config = function(_, opts)
--- 			require("kanagawa").setup(opts)
--- 			vim.cmd("colorscheme kanagawa")
--- 		end,
--- 	},
--- }
--- return {
--- "tiagovla/tokyodark.nvim",
--- priority = 1000,
--- opts = {
---   transparent_background = true,
---   gamma = 1.0,
---   styles = {
---     comments = { italic = true },
---     keywords = { italic = true },
---     identifiers = { italic = true },
---     functions = { italic = true },
---     variables = { italic = true },
---   },
---   custom_highlights = function(highlights, palette)
---     highlights.Comment = { fg = palette.grey, italic = true, bold = true }
---     return highlights
---   end,
--- },
--- config = function(_, opts)
---   require("tokyodark").setup(opts)
---   vim.cmd([[colorscheme tokyodark]])
--- end,
--- return {
--- 	"Shatur/neovim-ayu",
--- 	lazy = false,
--- 	priority = 1000,
--- 	config = function()
--- 		local colors = require("ayu.colors")
--- 		colors.generate(false) -- false = dark, true = mirage
--- 		require("ayu").setup({
--- 			mirage = false,
--- 			terminal = true,
--- 			overrides = {
--- 				-- transparency
--- 				Normal = { bg = "None" },
--- 				NormalNC = { bg = "None" },
--- 				NormalFloat = { bg = "None" },
--- 				FloatBorder = { bg = "None" },
--- 				FloatTitle = { bg = "None" },
--- 				EndOfBuffer = { bg = "None" },
--- 				MsgArea = { bg = "None" },
--- 				Pmenu = { bg = "None" },
--- 				PmenuSel = { bg = "None" },
--- 				PmenuSbar = { bg = "None" },
--- 				PmenuThumb = { bg = "None" },
--- 				CursorLine = { bg = "None" },
--- 				CursorColumn = { bg = "None" },
--- 				ColorColumn = { bg = "None" },
--- 				SignColumn = { bg = "None" },
--- 				Folded = { bg = "None" },
--- 				FoldColumn = { bg = "None" },
--- 				VertSplit = { bg = "None" },
--- 				WinSeparator = { bg = "None" },
--- 				StatusLine = { bg = "None" },
--- 				StatusLineNC = { bg = "None" },
--- 				TabLine = { bg = "None" },
--- 				TabLineFill = { bg = "None" },
--- 				TabLineSel = { bg = "None" },
--- 				DiagnosticVirtualTextError = { bg = "None" },
--- 				DiagnosticVirtualTextWarn = { bg = "None" },
--- 				DiagnosticVirtualTextInfo = { bg = "None" },
--- 				DiagnosticVirtualTextHint = { bg = "None" },
--- 				TelescopeNormal = { bg = "None" },
--- 				TelescopeBorder = { bg = "None" },
--- 				TelescopePromptNormal = { bg = "None" },
--- 				TelescopePromptBorder = { bg = "None" },
--- 				TelescopeResultsNormal = { bg = "None" },
--- 				TelescopeResultsBorder = { bg = "None" },
--- 				TelescopePreviewNormal = { bg = "None" },
--- 				TelescopePreviewBorder = { bg = "None" },
--- 				NvimTreeNormal = { bg = "None" },
--- 				NvimTreeNormalNC = { bg = "None" },
--- 				NvimTreeEndOfBuffer = { bg = "None" },
--- 				NvimTreeWinSeparator = { bg = "None" },
--- 				NeoTreeNormal = { bg = "None" },
--- 				NeoTreeNormalNC = { bg = "None" },
--- 				WhichKeyFloat = { bg = "None" },
--- 				WhichKeyBorder = { bg = "None" },
--- 				Comment = { fg = colors.comment, italic = true },
--- 				Constant = { fg = "#90E1C6" },
--- 				CInclude = { fg = "#FE8E40" },
--- 				CDefine = { fg = "#FE8E40" },
--- 				pythonFunction = { fg = "#F9AF4F" },
--- 				["@punctuation.bracket.c"] = { fg = "#FE8E40" },
--- 				["@type.builtin"] = { fg = "#37B1DB", italic = true },
--- 				["@variable"] = { fg = "#BFBDB6", italic = true },
--- 				["@punctuation.special.c"] = { fg = "#FFB454" },
--- 				["pythonInclude"] = { fg = "#FE8E40" },
--- 				["@function.builtin.lua"] = { fg = "#D95757" },
--- 				["@variable.member.lua"] = { fg = "#BFBDB6" },
--- 				["@variable.lua"] = { fg = "#37B1DB" },
--- 				["@property.lua"] = { fg = "#BFBDB6" },
--- 				["@number.lua"] = { fg = "#C89EF3" },
--- 				["@boolean.lua"] = { fg = "#C89EF3" },
--- 				["@function.call.lua"] = { fg = "#D95757" },
--- 				["@constant.macro.c"] = { fg = "#FFB454" },
--- 				["@number.c"] = { fg = "#C89EF3" },
--- 				["@variable.parameter.c"] = { fg = "#C89EF3" },
--- 				["@lsp.typemod.function.defaultLibrary.c"] = { fg = "#D95757" },
--- 				["@lsp.typemod.variable.readonly.luau"] = { fg = "#F29668", italic = true },
--- 				["@lsp.typemod.function.defaultLibrary.luau"] = { fg = "#D95757" },
--- 				luaConstant = { fg = "#C89EF3" },
--- 				luaNumber = { fg = "#C89EF3" },
--- 				["@lsp.type.enumMember.luau"] = { fg = "#BFBDB6" },
--- 			},
--- 		})
--- 		vim.cmd("colorscheme ayu")
--- 	end,
--- }
--- {
--- return {
--- 	"webhooked/kanso.nvim",
--- 	lazy = false,
--- 	priority = 1000,
--- 	config = function()
--- 		-- Default options:
--- 		require("kanso").setup({
--- 			bold = true, -- enable bold fonts
--- 			italics = true, -- enable italics
--- 			compile = false, -- enable compiling the colorscheme
--- 			undercurl = true, -- enable undercurls
--- 			commentStyle = { italic = true },
--- 			functionStyle = {},
--- 			keywordStyle = { italic = true },
--- 			statementStyle = {},
--- 			typeStyle = {},
--- 			transparent = true, -- do not set background color
--- 			dimInactive = false, -- dim inactive window `:h hl-NormalNC`
--- 			terminalColors = true, -- define vim.g.terminal_color_{0,17}
--- 			colors = { -- add/modify theme and palette colors
--- 				palette = {},
--- 				theme = { zen = {}, pearl = {}, ink = {}, all = {} },
--- 			},
--- 			overrides = function(colors) -- add/modify highlights
--- 				return {}
--- 			end,
--- 			background = { -- map the value of 'background' option to a theme
--- 				dark = "zen", -- try "zen", "mist" or "pearl" !
--- 				light = "zen", -- try "zen", "mist" or "ink" !
--- 			},
--- 			foreground = "saturated", -- "default" or "saturated" (can also be a table like background)
--- 			minimal = false, -- reduced color palette for a more minimal look
--- 		})
---
--- 		-- setup must be called before loading
--- 		vim.cmd("colorscheme kanso")
--- 	end,
--- }
--- lua/plugins/rose-pine.lua
--- return {
--- 	"rose-pine/neovim",
--- 	name = "rose-pine",
--- 	config = function()
--- 		require("rose-pine").setup({
--- 			variant = "moon", -- auto, main, moon, or dawn
--- 			dark_variant = "main", -- main, moon, or dawn
--- 			dim_inactive_windows = false,
--- 			extend_background_behind_borders = true,
---
--- 			enable = {
--- 				terminal = true,
--- 				legacy_highlights = true, -- Improve compatibility for previous versions of Neovim
--- 				migrations = true, -- Handle deprecated options automatically
--- 			},
---
--- 			styles = {
--- 				bold = true,
--- 				italic = true,
--- 				transparency = true,
--- 			},
---
--- 			groups = {
--- 				border = "muted",
--- 				link = "iris",
--- 				panel = "surface",
---
--- 				error = "love",
--- 				hint = "iris",
--- 				info = "foam",
--- 				note = "pine",
--- 				todo = "rose",
--- 				warn = "gold",
---
--- 				git_add = "foam",
--- 				git_change = "rose",
--- 				git_delete = "love",
--- 				git_dirty = "rose",
--- 				git_ignore = "muted",
--- 				git_merge = "iris",
--- 				git_rename = "pine",
--- 				git_stage = "iris",
--- 				git_text = "rose",
--- 				git_untracked = "subtle",
---
--- 				h1 = "iris",
--- 				h2 = "foam",
--- 				h3 = "rose",
--- 				h4 = "gold",
--- 				h5 = "pine",
--- 				h6 = "foam",
--- 			},
---
--- 			palette = {
--- 				-- Override the builtin palette per variant
--- 				-- moon = {
--- 				--     base = '#18191a',
--- 				--     overlay = '#363738',
--- 				-- },
--- 			},
---
--- 			-- NOTE: Highlight groups are extended (merged) by default. Disable this
--- 			-- per group via `inherit = false`
--- 			highlight_groups = {
--- 				-- Comment = { fg = "foam" },
--- 				-- StatusLine = { fg = "love", bg = "love", blend = 15 },
--- 				-- VertSplit = { fg = "muted", bg = "muted" },
--- 				-- Visual = { fg = "base", bg = "text", inherit = false },
--- 			},
---
--- 			before_highlight = function(group, highlight, palette)
--- 				-- Disable all undercurls
--- 				-- if highlight.undercurl then
--- 				--     highlight.undercurl = false
--- 				-- end
--- 				--
--- 				-- Change palette colour
--- 				-- if highlight.fg == palette.pine then
--- 				--     highlight.fg = palette.foam
--- 				-- end
--- 			end,
--- 		})
---
--- 		vim.cmd("colorscheme rose-pine")
--- 		-- vim.cmd("colorscheme rose-pine-main")
--- 		-- vim.cmd("colorscheme rose-pine-moon")
--- 		-- vim.cmd("colorscheme rose-pine-dawn")
--- 		vim.cmd("colorscheme rose-pine")
--- 	end,
--- }
--- return {
--- 	"oskarnurm/koda.nvim",
--- 	lazy = false, -- Load immediately during startup
--- 	priority = 1000, -- High priority so it loads before other UI plugins
--- 	config = function()
--- 		require("koda").setup({
--- 			transparent = true, -- Enable transparent background
---
--- 			-- Variants to use when auto-switching based on vim.o.background
--- 			-- Options: 'dark', 'light', 'moss', 'glade'
--- 			theme = {
--- 				dark = "dark",
--- 				light = "light",
--- 			},
---
--- 			-- Highlight support for plugins installed by your manager (lazy.nvim, mini.deps, vim.pack)
--- 			auto = true,
---
--- 			-- Cache the theme for performance
--- 			cache = true,
---
--- 			-- Syntax group style overrides
--- 			styles = {
--- 				functions = { fg = "#e5c07b" },
--- 				keywords = { fg = "#c397d8" },
--- 				comments = { fg = "#5c6370", italic = true },
--- 				strings = { fg = "#97c459" },
--- 				constants = { fg = "#d19a66" },
--- 			},
---
--- 			-- Override palette colors for the active variant
--- 			colors = {
--- 				-- func = "#4078F2",
--- 				-- keyword = "#A627A4",
--- 			},
---
--- 			-- Custom highlight overrides or extensions
--- 			on_highlights = function(hl, c)
--- 				-- hl.LineNr = { fg = c.info }
--- 				-- hl.Comment = { fg = c.emphasis, italic = true }
--- 				-- hl.RainbowDelimiterRed = { fg = "#fb2b2b" }
--- 			end,
--- 		})
---
--- 		-- Set colorscheme after setup
--- 		vim.cmd.colorscheme("koda")
--- 	end,
--- }
---{
--- return {
--- 	"ellisonleao/gruvbox.nvim",
--- 	priority = 1000,
--- 	config = true,
--- 	opts = ...,
--- 	config = function()
--- 		-- Default options:
--- 		require("gruvbox").setup({
--- 			terminal_colors = true, -- add neovim terminal colors
--- 			undercurl = true,
--- 			underline = true,
--- 			bold = true,
--- 			italic = {
--- 				strings = true,
--- 				emphasis = true,
--- 				comments = true,
--- 				operators = false,
--- 				folds = true,
--- 			},
--- 			strikethrough = true,
--- 			invert_selection = false,
--- 			invert_signs = false,
--- 			invert_tabline = false,
--- 			inverse = true, -- invert background for search, diffs, statuslines and errors
--- 			contrast = "", -- can be "hard", "soft" or empty string
--- 			palette_overrides = {},
--- 			overrides = {},
--- 			dim_inactive = false,
--- 			transparent_mode = true,
--- 		})
--- 		vim.cmd("colorscheme gruvbox")
--- 	end,
--- }
--- 	"catppuccin/nvim",
--- 	name = "catppuccin",
--- 	priority = 1000,
--- 	config = function()
--- 		require("catppuccin").setup({
--- 			flavour = "macchiato", -- latte, frappe, macchiato, mocha
--- 			background = { -- :h background
--- 				light = "latte",
--- 				dark = "macchiato",
--- 			},
--- 			transparent_background = false, -- disables setting the background color.
--- 			float = {
--- 				transparent = true, -- enable transparent floating windows
--- 				solid = false, -- use solid styling for floating windows, see |winborder|
--- 			},
--- 			term_colors = false, -- sets terminal colors (e.g. `g:terminal_color_0`)
--- 			dim_inactive = {
--- 				enabled = false, -- dims the background color of inactive window
--- 				shade = "dark",
--- 				percentage = 0.15, -- percentage of the shade to apply to the inactive window
--- 			},
--- 			no_italic = false, -- Force no italic
--- 			no_bold = false, -- Force no bold
--- 			no_underline = false, -- Force no underline
--- 			styles = { -- Handles the styles of general hi groups (see `:h highlight-args`):
--- 				comments = { "italic" }, -- Change the style of comments
--- 				conditionals = { "italic" },
--- 				loops = {},
--- 				functions = {},
--- 				keywords = {},
--- 				strings = {},
--- 				variables = {},
--- 				numbers = {},
--- 				booleans = {},
--- 				properties = {},
--- 				types = {},
--- 				operators = {},
--- 				-- miscs = {}, -- Uncomment to turn off hard-coded styles
--- 			},
--- 			lsp_styles = { -- Handles the style of specific lsp hl groups (see `:h lsp-highlight`).
--- 				virtual_text = {
--- 					errors = { "italic" },
--- 					hints = { "italic" },
--- 					warnings = { "italic" },
--- 					information = { "italic" },
--- 					ok = { "italic" },
--- 				},
--- 				underlines = {
--- 					errors = { "underline" },
--- 					hints = { "underline" },
--- 					warnings = { "underline" },
--- 					information = { "underline" },
--- 					ok = { "underline" },
--- 				},
--- 				inlay_hints = {
--- 					background = false,
--- 				},
--- 			},
--- 			color_overrides = {},
--- 			custom_highlights = {},
--- 			default_integrations = true,
--- 			auto_integrations = false,
--- 			integrations = {
--- 				cmp = true,
--- 				gitsigns = true,
--- 				nvimtree = true,
--- 				notify = false,
--- 				mini = {
--- 					enabled = true,
--- 					indentscope_color = "",
--- 				},
--- 				-- For more plugins integrations please scroll down (https://github.com/catppuccin/nvim#integrations)
--- 			},
--- 		})
---
--- 		-- setup must be called before loading
--- 		vim.cmd.colorscheme("catppuccin-nvim")
--- 	end,
--- }
--- config = function()
--- 	-- Lua
--- 	require("onedark").setup({
--- 		-- Main options --
--- 		style = "darker", -- Default theme style. Choose between 'dark', 'darker', 'cool', 'deep', 'warm', 'warmer' and 'light'
--- 		transparent = true, -- Show/hide background
--- 		term_colors = true, -- Change terminal color as per the selected theme style
--- 		ending_tildes = false, -- Show the end-of-buffer tildes. By default they are hidden
--- 		cmp_itemkind_reverse = false, -- reverse item kind highlights in cmp menu
---
--- 		-- toggle theme style ---
--- 		toggle_style_key = nil, -- keybind to toggle theme style. Leave it nil to disable it, or set it to a string, for example "<leader>ts"
--- 		toggle_style_list = { "dark", "darker", "cool", "deep", "warm", "warmer", "light" }, -- List of styles to toggle between
---
--- 		-- Change code style ---
--- 		-- Options are italic, bold, underline, none
--- 		-- You can configure multiple style with comma separated, For e.g., keywords = 'italic,bold'
--- 		code_style = {
--- 			comments = "italic",
--- 			keywords = "italic",
--- 			functions = "italic",
--- 			strings = "italic",
--- 			variables = "italic",
--- 		},
---
--- 		-- Lualine options --
--- 		lualine = {
--- 			transparent = true, -- lualine center bar transparency
--- 		},
---
--- 		-- Custom Highlights --
--- 		colors = {
--- 			-- purple = "#E2EFDE",
--- 			-- cyan = "#c0c0c0",
--- 			-- orange = "#e8c88c",
--- 			-- green = "#a3be8c",
--- 		},
--- 		-- All'interno di require("onedark").setup({ ...
--- 		highlights = {
--- 			-- Funzioni standard (es. printf) e globali
--- 			-- ["@lsp.type.function"] = { fg = "$purple", fmt = "italic" },
--- 			-- ["@lsp.typemod.function.defaultLibrary"] = { fg = "$purple", fmt = "italic" },
--- 			-- ["@lsp.typemod.function.globalScope"] = { fg = "$purple", fmt = "italic" },
--- 			--
--- 			-- -- Modificatori (per essere sicuri che il colore "tenga")
--- 			-- ["@lsp.mod.defaultLibrary"] = { fg = "$purple" },
--- 			-- ["@lsp.mod.globalScope"] = { fg = "$purple" },
--- 			--
--- 			-- -- Manteniamo l'include rosso/purple come prima
--- 			-- ["cInclude"] = { fg = "#94C5CC" },
--- 			-- ["Repeat"] = { fg = "#94C5CC" },
--- 			["Function"] = { fg = "#E2EFDE" },
--- 			-- ["cPreProc"] = { fg = "#94C5CC" },
--- 		},
--- 		-- Plugins Config --
--- 		diagnostics = {
--- 			darker = true, -- darker colors for diagnostic
--- 			undercurl = true, -- use undercurl instead of underline for diagnostics
--- 			background = true, -- use background color for virtual text
--- 		},
--- 	})
---
--- 	require("onedark").load()
--- end,
