@@ -69,6 +69,11 @@ vim.lsp.config("lua_ls", {
 	},
 })
 
+vim.lsp.config("vhdl_ls", {
+	cmd = { "vhdl_ls" },
+	filetypes = { "vhd" },
+})
+
 vim.lsp.config("pyright", {
 	cmd = { "pyright-langserver", "--stdio" },
 	filetypes = { "python" },
