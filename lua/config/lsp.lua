@@ -71,7 +71,7 @@ vim.lsp.config("lua_ls", {
 
 vim.lsp.config("vhdl_ls", {
 	cmd = { "vhdl_ls" },
-	filetypes = { "vhd" },
+	filetypes = { "vhdl" },
 })
 
 vim.lsp.config("pyright", {
@@ -115,4 +115,4 @@ vim.lsp.config("texlab", {
 })
 
 -- ─── Enable the configured LSP servers ─────────────────────────────────────────
-vim.lsp.enable({ "lua_ls", "pyright", "clangd", "luau_lsp", "bashls", "texlab" })
+vim.lsp.enable({ "lua_ls", "pyright", "clangd", "luau_lsp", "bashls", "texlab", "vhdl_ls" })

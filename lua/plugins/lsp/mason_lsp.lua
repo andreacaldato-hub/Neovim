@@ -17,6 +17,7 @@ return {
 					"lua_ls", -- Lua
 					"pyright", -- Python
 					"clangd", -- C/C++
+					"vhdl_ls", -- VHDL (FPGA / Vivado)
 				},
 			})
 		end,
