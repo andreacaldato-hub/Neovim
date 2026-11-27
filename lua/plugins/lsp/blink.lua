@@ -18,8 +18,8 @@ return {
 		completion = {
 			list = {
 				selection = {
-					preselect = true, -- don't auto-select the first item
-					auto_insert = false, -- don't auto-insert until you explicitly select
+					preselect = true, -- preselect (highlight) the first item
+					auto_insert = false, -- don't auto-insert until you explicitly accept
 				},
 			},
 			menu = {

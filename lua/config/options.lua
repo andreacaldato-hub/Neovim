@@ -5,7 +5,6 @@ vim.opt.clipboard = "unnamedplus" -- use the system clipboard
 vim.opt.shell = "/usr/bin/zsh"
 
 -- ─── Line numbers ─────────────────────────────────────────────────────────────
-vim.opt.nu = true
 vim.opt.number = true
 vim.opt.relativenumber = true
 vim.opt.cursorline = true
@@ -42,7 +41,7 @@ vim.opt.expandtab = true
 vim.opt.smarttab = true
 vim.opt.shiftwidth = 2
 vim.opt.tabstop = 2
-vim.opt.softtabstop = 4
+vim.opt.softtabstop = 2
 vim.opt.backspace = { "start", "eol", "indent" }
 vim.opt.swapfile = false
 vim.opt.backup = false
@@ -73,16 +72,11 @@ vim.g.vimtex_compiler_method = "latexmk"
 vim.g.vimtex_view_general_options = "--synctex-forward @line:@col:@tex --no-guess"
 
 -- ─── Custom commands ──────────────────────────────────────────────────────────
--- Compile the current .tex file and open the resulting PDF in Zathura
+-- Compile the current .tex file. VimTeX opens the PDF in Zathura automatically
+-- (vimtex_view_automatic = 1 in plugins/latex/plugins/vimtex.lua), so there's no
+-- need to launch a viewer by hand (and no hardcoded terminal).
 vim.api.nvim_create_user_command("LatexBuild", function()
-	local tex_file = vim.fn.expand("%:p")
-	local pdf_file = tex_file:gsub("%.tex$", ".pdf")
-
-	-- Compile the .tex file
 	vim.cmd("VimtexCompile")
-
-	-- Open Zathura in a Kitty split
-	vim.fn.system("kitty --detach zathura " .. pdf_file)
 end, {})
 
 -- ─── Highlights ───────────────────────────────────────────────────────────────

@@ -48,6 +48,7 @@ vim.api.nvim_create_autocmd("BufNewFile", {
 vim.api.nvim_create_autocmd({ "VimEnter", "DirChanged" }, {
 	pattern = "*",
 	callback = function()
-		vim.fn.system({ "tmux", "chdir", vim.fn.getcwd() })
+		-- Non-blocking: keeps `:cd` snappy instead of waiting on a subprocess.
+		vim.system({ "tmux", "chdir", vim.fn.getcwd() }, nil, function() end)
 	end,
 })

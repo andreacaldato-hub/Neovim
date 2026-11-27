@@ -53,13 +53,6 @@ return {
 			end,
 			desc = "Command History",
 		},
-		{
-			"<leader>n",
-			function()
-				Snacks.picker.notifications()
-			end,
-			desc = "Notification History",
-		},
 		-- find
 		{
 			"<leader>fg",
@@ -97,13 +90,8 @@ return {
 			end,
 			desc = "GitHub Issues (all)",
 		},
-		{
-			"<leader>gp",
-			function()
-				Snacks.picker.gh_pr()
-			end,
-			desc = "GitHub Pull Requests (open)",
-		},
+		-- NOTE: <leader>gp is reserved by Neogit for "git push"; GitHub PRs live
+		-- on <leader>gP (all states) to avoid the keymap clash.
 		{
 			"<leader>gP",
 			function()

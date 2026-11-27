@@ -1,5 +1,6 @@
 return {
 	"stevearc/overseer.nvim",
+	event = "VeryLazy", -- otherwise the spec never loads (keys are all commented out) and templates aren't registered
 	keys = {
 		-- {
 		-- 	"<leader>or",

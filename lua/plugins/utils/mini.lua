@@ -16,7 +16,4 @@ return {
 			n_lines = 20, -- how many lines to search for surrounding
 		},
 	},
-
-	-- Disable LazyVim's built-in mini.surround to avoid conflicts
-	{ "echasnovski/mini.surround", enabled = true },
 }

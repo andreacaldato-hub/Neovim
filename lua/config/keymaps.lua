@@ -43,7 +43,7 @@ map("n", "N", "Nzzzv", opts)
 map("n", "<C-d>", "<C-d>zz", opts) -- center half-page jumps
 map("n", "<C-u>", "<C-u>zz", opts)
 map("n", "<C-s>", "<cmd>w<CR>", opts) -- save file
-map("n", "<C-q>", "<cmd>q!<CR>", opts) -- save file
+map("n", "<C-q>", "<cmd>q!<CR>", opts) -- quit without saving
 
 -- ─── Buffers ────────────────────────────────────────────────────────────────────
 map("n", "<Tab>", ":bnext<CR>", opts)
@@ -82,13 +82,13 @@ map("t", "<Esc>", [[<C-\><C-n>]], opts)
 map("t", "<leader>q", "<C-\\><C-n>:q<CR>", opts)
 
 -- Open a horizontal tmux split in the current file's directory
-function OpenTmuxSplit()
+local function open_tmux_split()
 	local file_path = vim.fn.expand("%:p:h")
-	local cmd = "tmux split-window -h -c " .. vim.fn.shellescape(file_path)
-	vim.fn.system(cmd)
+	-- list form: no shell interpolation, no need for shellescape
+	vim.fn.system({ "tmux", "split-window", "-h", "-c", file_path })
 end
 
-map("n", "<leader>t", ":lua OpenTmuxSplit()<CR>", opts)
+map("n", "<leader>t", open_tmux_split, opts)
 
 -- ─── Live server ────────────────────────────────────────────────────────────────
 local live_servers = {}
@@ -157,22 +157,35 @@ vim.api.nvim_create_autocmd("BufWritePost", {
 })
 
 -- ─── Git info in tmux ───────────────────────────────────────────────────────────
+-- Runs on BufEnter, so keep it non-blocking: spawning git synchronously here
+-- caused a visible hiccup every time you switched buffers.
+local function set_tmux_git_info(value)
+	vim.system({ "tmux", "set-option", "-gq", "@nvim_git_info", value }, nil, function() end)
+end
+
 vim.api.nvim_create_autocmd("BufEnter", {
 	callback = function()
 		local file = vim.fn.expand("%:p")
 		if file == "" or vim.fn.filereadable(file) == 0 then
+			set_tmux_git_info("")
 			return
 		end
 		local file_dir = vim.fn.fnamemodify(file, ":h")
-		local git_root_tbl = vim.fn.systemlist({ "git", "-C", file_dir, "rev-parse", "--show-toplevel" })
-		local branch_tbl = vim.fn.systemlist({ "git", "-C", file_dir, "rev-parse", "--abbrev-ref", "HEAD" })
-		if vim.v.shell_error ~= 0 or #git_root_tbl == 0 or #branch_tbl == 0 then
-			vim.fn.system({ "tmux", "set-option", "-gq", "@nvim_git_info", "" })
-			return
-		end
-		local repo = vim.fn.fnamemodify(vim.fn.trim(git_root_tbl[1]), ":t")
-		local branch = vim.fn.trim(branch_tbl[1])
-		vim.fn.system({ "tmux", "set-option", "-gq", "@nvim_git_info", string.format(" %s:%s", repo, branch) })
+
+		vim.system({ "git", "-C", file_dir, "rev-parse", "--show-toplevel" }, nil, function(root)
+			if root.code ~= 0 or vim.trim(root.stdout or "") == "" then
+				set_tmux_git_info("")
+				return
+			end
+			vim.system({ "git", "-C", file_dir, "rev-parse", "--abbrev-ref", "HEAD" }, nil, function(branch)
+				if branch.code ~= 0 or vim.trim(branch.stdout or "") == "" then
+					set_tmux_git_info("")
+					return
+				end
+				local repo = vim.fn.fnamemodify(vim.trim(root.stdout), ":t")
+				set_tmux_git_info(string.format(" %s:%s", repo, vim.trim(branch.stdout)))
+			end)
+		end)
 	end,
 })
 

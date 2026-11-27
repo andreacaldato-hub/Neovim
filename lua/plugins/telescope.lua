@@ -23,7 +23,7 @@ return {
 				defaults = {
 					hidden = true,
 					layout_strategy = "flex",
-					layout_config = { horizontal = { preview_width = 0.7 } },
+					layout_config = { horizontal = { preview_width = 0.6 } },
 
 					-- vertical red bar
 					selection_caret = "▌ ", -- the FZF-style bar

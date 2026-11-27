@@ -12,7 +12,7 @@ return {
 				python = { "black" }, -- python formatter
 				sh = { "shfmt" }, -- covers .zshrc, .bashrc, shell scripts
 				zsh = { "shfmt" }, -- explicit zsh
-				java = { "google-java-format" }, -- explicit zsh
+				java = { "google-java-format" }, -- Java formatter
 			},
 
 			format_on_save = {

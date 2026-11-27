@@ -18,6 +18,7 @@ return {
 					"pyright", -- Python
 					"clangd", -- C/C++
 					"vhdl_ls", -- VHDL (FPGA / Vivado)
+					"texlab", -- LaTeX
 				},
 			})
 		end,

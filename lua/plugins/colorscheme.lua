@@ -9,8 +9,6 @@ return {
 	priority = 1000, -- load before every other plugin
 
 	config = function()
-		local helpers = require("onedarkpro.helpers")
-
 		require("onedarkpro").setup({
 
 			---------------------------------------------------------------------
